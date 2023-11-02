@@ -1,0 +1,11 @@
+# server congfig
+PORT = 8080
+DATABASE = postgress
+CLAVE_SECRETA = secretisimo
+
+# Postrgres Config
+POSTGRES_DB_PORT = 5432
+POSTGRES_DB_HOST = localhost
+POSTGRES_DB_NAME = resto
+POSTGRES_DB_USER = papo
+POSTGRES_DB_PASSWORD = papooo
