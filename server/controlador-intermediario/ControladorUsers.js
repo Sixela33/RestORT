@@ -1,6 +1,5 @@
 import ServicioUsers from "../servicio-logica/ServicioUsers.js"
 import Jwt from 'jsonwebtoken';
-const { jwt } = Jwt;
 
 
 class ControladorUsers {
@@ -12,8 +11,10 @@ class ControladorUsers {
     crearUsuario = async (req, res) => {
         try {
             let {nombre, contrasena, documento} = req.body
+            if (!nombre || !contrasena || !documento) return res.status(400).send('datosInvalidos')
             await this.servico.crearUsuario(nombre, contrasena, documento, false, false)
             return res.status(201).send("Usuario creado exitosamente")
+            
         } catch (error) {
             console.log(error)
             return res.status(500).send(error)
@@ -24,6 +25,7 @@ class ControladorUsers {
     iniciarSesion = async (req, res) => {
         try {
             const {documento, contrasena} = req.body
+            if (!documento || !contrasena) return res.status(400).send('datosInvalidos')
             const token = await this.servico.iniciarSesion(documento, contrasena)
 
             if (token) {

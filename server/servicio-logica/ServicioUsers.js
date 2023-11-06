@@ -1,4 +1,4 @@
-import ModeloPostgres from "../modelo-db/ModeloPostgres.js";
+import ModeloPostgres from "../modelo-db/DAO/ModeloPostgres.js";
 import Jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 

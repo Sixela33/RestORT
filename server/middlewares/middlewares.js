@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import Jwt from 'jsonwebtoken';
 
 // valida que el token que este en el header sea valido, agrega a la llamada el camo "user" que tiene toda la info del mismo
 function validarToken(req, res, next) {
@@ -9,7 +9,7 @@ function validarToken(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.CLAVE_SECRETA)
+    const decoded = Jwt.verify(token, process.env.CLAVE_SECRETA)
     req.user = decoded
     next()
   } catch (error) {
@@ -17,4 +17,4 @@ function validarToken(req, res, next) {
   }
 }
 
-module.exports = validarToken;
+export default validarToken;

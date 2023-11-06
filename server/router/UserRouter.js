@@ -1,5 +1,6 @@
 import express, { Router } from 'express'
 import ControladorUsers from '../controlador-intermediario/ControladorUsers.js'
+import validarToken from '../middlewares/middlewares.js'
 
 class UserRouter {
     constructor() {
@@ -8,9 +9,8 @@ class UserRouter {
     }
 
     start() {
-        this.router.post('/register', this.controlador.crearUsuario)
+        this.router.post('/register', validarToken,  this.controlador.crearUsuario)
         this.router.post('/login', this.controlador.iniciarSesion)
-        this.router.get('/register')
         
         // Endpoint de prueba
         this.router.get('/', this.controlador.getUsuarios)

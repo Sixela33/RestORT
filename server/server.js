@@ -2,22 +2,20 @@ import express from "express"
 import cors from "cors"
 import 'dotenv/config'
 import UserRouter from "./router/UserRouter.js"
-
+import CnxPostgress from "./modelo-db/DBPostgres.js"
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cors())
 
-app.use(express.static('public'))
+app.use(express.static('public/cliente/build'))
 
 // -----------------------------------------------
 //         API RESTful : Productos
 // -----------------------------------------------
 app.use('/users', new UserRouter().start())
-app.get('/', (req, res) => {
-    res.json({pepe: "pepe"})
-})
+await CnxPostgress.conectar()
 
 // -----------------------------------------------
 //        LISTEN DEL SERVIDOR EXPRESS
