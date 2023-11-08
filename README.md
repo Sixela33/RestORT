@@ -13,5 +13,6 @@
   
   ```
     npm install
+    npm run makemigrations
     npm run watch
   ```
