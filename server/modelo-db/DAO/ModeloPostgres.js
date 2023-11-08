@@ -11,8 +11,6 @@ class ModeloPostgres {
             await CnxPostgress.db.query(sql);
         } catch (error) {
             console.error('Error al ejecutar las migraciones:', error);
-        } finally {
-            client.release();
         }
     }
 

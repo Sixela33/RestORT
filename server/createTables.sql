@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     esSuperUser BOOLEAN DEFAULT false
 );
 
-CREATE TABLE IF NOT EXISTS materiaPrima (
+CREATE TABLE IF NOT EXISTS insumos (
     insumoID SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     cantidad DECIMAL NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS materiaPrima (
     CHECK (unidadDeMedida IN ('KG', 'UNIDADES'))
 );
 
-CREATE TABLE IF NOT EXISTS itemMenu (
+CREATE TABLE IF NOT EXISTS platillos (
     platilloID SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     valor DECIMAL NOT NULL

@@ -15,7 +15,7 @@ class CnxPostgress {
     static conectar = async () => {
         try {
             console.log("Conectando a la base de datos...")
-            CnxPostgress.db = await CnxPostgress.pool.connect();
+            CnxPostgress.db = await CnxPostgress.pool.connect()
             console.log("Base de datos conectada!")
             CnxPostgress.connection = true
         } catch (error) {
@@ -23,7 +23,12 @@ class CnxPostgress {
         }
     }
 
-    static desconectar = () => {}
+    static desconectar = async () => {
+        if(CnxPostgress.db){
+            await CnxPostgress.db.release()
+            CnxPostgress.connection = false
+        }
+    }
 }
 
 export default CnxPostgress
