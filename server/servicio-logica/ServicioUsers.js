@@ -13,11 +13,15 @@ class ServicioUsers {
         return usuarios
     }
 
-    crearUsuario = async (nombre, contrasena, documento, esAdmin, esSuperUser) => {
+    crearUsuario = async ({nombre, contrasena, documento, esAdmin, esSuperUser}) => {
+        if (!nombre || !contrasena || !documento) throw "Datos invalidos"
+        if(esAdmin == null) esAdmin = false
+        if(esSuperUser == null) esSuperUser = false
+ 
         const usuarioExistente = await this.model.getUsuarioXdocumento(documento)
 
         if (usuarioExistente){
-            return {message: "Este usuario ya existe"}
+            throw "Este usuario ya existe" 
         }
 
         const contrasenaHash = await bcrypt.hash(contrasena, 10)
@@ -26,7 +30,10 @@ class ServicioUsers {
         return usuario
     }
 
-    iniciarSesion = async (documento, contrasena) => {
+    iniciarSesion = async ({documento, contrasena}) => {
+
+        if (!documento || !contrasena) return
+
         const usuario = await this.model.getUsuarioXdocumento(documento)
 
         if (usuario){
@@ -38,7 +45,7 @@ class ServicioUsers {
             }
         }
 
-        return null
+        return
     }
     
     hacerAdmin = async () => {}

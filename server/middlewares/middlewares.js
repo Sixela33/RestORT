@@ -17,4 +17,6 @@ function validarToken(req, res, next) {
   }
 }
 
+
+
 export default validarToken;

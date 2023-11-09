@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS usuarios (
     documento VARCHAR(11) UNIQUE NOT NULL,
     nombre VARCHAR(255) NOT NULL,
     contrasena VARCHAR(255) NOT NULL,
-    esAdmin BOOLEAN DEFAULT false,
-    esSuperUser BOOLEAN DEFAULT false
+    esAdmin BOOLEAN NOT NULL DEFAULT false,
+    esSuperUser BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS insumos (
