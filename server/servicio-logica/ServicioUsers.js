@@ -1,6 +1,10 @@
 import ModeloPostgres from "../modelo-db/DAO/ModeloPostgres.js";
 import Jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
+import {
+    validarUserCreacion,
+    validarUserLogin
+} from "./validaciones/validacionesUser.js"
 
 class ServicioUsers {
     constructor() {
@@ -14,14 +18,16 @@ class ServicioUsers {
     }
 
     crearUsuario = async ({nombre, contrasena, documento, esAdmin, esSuperUser}) => {
-        if (!nombre || !contrasena || !documento) throw "Datos invalidos"
-        if(esAdmin == null) esAdmin = false
-        if(esSuperUser == null) esSuperUser = false
- 
+        const result = validarUserCreacion({nombre, contrasena, documento, esAdmin, esSuperUser})
+        
+        if (!result.result){
+            throw {message: result.error, status: 422 }
+        }
+
         const usuarioExistente = await this.model.getUsuarioXdocumento(documento)
 
         if (usuarioExistente){
-            throw "Este usuario ya existe" 
+            throw {message: "Este usuario ya existe", status: 409}
         }
 
         const contrasenaHash = await bcrypt.hash(contrasena, 10)
@@ -32,20 +38,25 @@ class ServicioUsers {
 
     iniciarSesion = async ({documento, contrasena}) => {
 
-        if (!documento || !contrasena) return
+        const result = validarUserLogin({documento, contrasena})
+        if (!result.result){
+            throw {message: result.error, status: 422 }
+        }
 
         const usuario = await this.model.getUsuarioXdocumento(documento)
 
-        if (usuario){
-            const contraCorrecta = await bcrypt.compare(contrasena, usuario.contrasena);
-            if (contraCorrecta){
-                delete usuario.contrasena
-                const token = await Jwt.sign(usuario, process.env.CLAVE_SECRETA);
-                return token
-            }
+        if (!usuario){
+            throw {message: "Datos de sesion invalidos", status: 401}
         }
 
-        return
+        const contraCorrecta = await bcrypt.compare(contrasena, usuario.contrasena);
+        if (contraCorrecta){
+            delete usuario.contrasena
+            const token = await Jwt.sign(usuario, process.env.CLAVE_SECRETA);
+            return token
+        }
+
+        throw {message: "Error desconocido", status: 500}
     }
     
     hacerAdmin = async () => {}

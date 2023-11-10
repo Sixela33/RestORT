@@ -14,15 +14,13 @@ class ControladorUsers {
             return res.status(201).send("Usuario creado exitosamente")
             
         } catch (error) {
-            console.log(error)
-            return res.status(500).send(error)
+            return res.status(error.status).send(error.message)
         }
     }
 
     // Inicia la sesion de usuario
     iniciarSesion = async (req, res) => {
         try {
-            console.log(req.body)
             const token = await this.servico.iniciarSesion(req.body)
 
             if (token) {
@@ -32,8 +30,7 @@ class ControladorUsers {
             return res.status(401).json("Datos de sesion invalidos")
 
         } catch (error) {
-            console.log(error)
-            return res.status(500).send(error)
+            return res.status(error.status).send(error.message)
         }
     }
 
