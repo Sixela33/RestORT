@@ -21,6 +21,7 @@ class ControladorUsers {
     // Inicia la sesion de usuario
     iniciarSesion = async (req, res) => {
         try {
+            console.log(req.body)
             const token = await this.servico.iniciarSesion(req.body)
 
             if (token) {

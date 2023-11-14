@@ -1,5 +1,5 @@
-server/node_modules
-server/.env
+node_modules
+.env
 
-server/data
-server/dbData
+data
+dbData

@@ -20,6 +20,7 @@ class CnxPostgress {
             CnxPostgress.connection = true
         } catch (error) {
             console.log("error en la conexion", error)
+            throw error
         }
     }
 
