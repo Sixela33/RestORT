@@ -52,6 +52,43 @@ class ModeloPostgres {
         return res.rows
     }
 
+    modificarInsumoNombre = async (id, nombre) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("UPDATE insumos WHERE id = $1 SET nombre = $2 VALUES ($1, $2);",
+        [id, nombre])
+    }
+
+    modificarInsumoCantidad = async (id, cantidad) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("UPDATE insumos WHERE id = $1 SET cantidad = $2) VALUES ($1, $2);",
+        [id, cantidad])
+    }
+
+    modificarInsumoCostoUnidad = async (id, costoXunidad) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("UPDATE insumos WHERE id = $1 SET costoXunidad = $2) VALUES ($1, $2);",
+        [id, costoXunidad])
+    }
+
+    modificarInsumoUnidadMedida = async (id, unidadDeMedida) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("UPDATE insumos WHERE id = $1 SET unidadDeMedida = $2) VALUES ($1, $2);",
+        [id, unidadDeMedida])
+    }
+
+    eliminarInsumo = async (id) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("DELETE FROM insumos WHERE insumoID = $1",
+        [id])
+    // To be Discussed??
+    }
+
+    crearPlatillo = async (nombre, costo, insumos) => {
+        if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
+        CnxPostgress.db.query("INSERT INTO platillos nombre, costo, insumos) VALUES ($1, $2, $3);",
+        [nombre, costo, insumos])
+    }
+
 }
 
 export default ModeloPostgres

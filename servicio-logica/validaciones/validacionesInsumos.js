@@ -27,7 +27,33 @@ const validarBuscarInsumo = id => {
     return {result: true}
 }
 
+const validarEliminarInsumo = id => {
+    const insumoSchema = Joi.object({
+        id: Joi.number()
+    })
+    
+    const { error } = userSchema.validate(user)
+    if (error) {
+        return {result: false, error: error.details[0].message}
+    } 
+    return {result: true}
+}
+
+const validarModificarInsumo = id => {
+    const insumoSchema = Joi.object({
+        id: Joi.number()
+    })
+    
+    const { error } = userSchema.validate(user)
+    if (error) {
+        return {result: false, error: error.details[0].message}
+    } 
+    return {result: true}
+}
+
 export {
     validarCreacionDeInsumo,
-    validarBuscarInsumo
+    validarBuscarInsumo,
+    validarEliminarInsumo,
+    validarModificarInsumo
     }
