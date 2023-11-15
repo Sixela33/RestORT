@@ -24,6 +24,58 @@ class ServicioInsumos {
         }
         return await this.model.traerInsumos(id)
     }
+
+    eliminarInsumo = async  ({id}) => {
+        const result = validarEliminarInsumo({id})
+        
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        await this.model.eliminarInsumo(id)
+    }
+
+    modificarInsumoNombre = async  ({id}, {nombre}) => {
+        const result = validarModificarInsumo({id})
+        
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        await this.model.modificarInsumoNombre(id, nombre)
+    }
+
+    modificarInsumoCantidad = async  ({id}, {cantidad}) => {
+        const result = validarModificarInsumo({id})
+        
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        await this.model.modificarInsumoCantidad(id, cantidad)
+    }
+
+    modificarInsumoCostoUnidad = async  ({id}, {costo}) => {
+        const result = validarModificarInsumo({id})
+        
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        await this.model.modificarInsumoCostoUnidad(id, costo)
+    }
+
+    modificarInsumoUnidadMedida = async  ({id}, {unidad}) => {
+        const result = validarModificarInsumo({id})
+        
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        await this.model.modificarInsumoUnidadMedida(id, unidad)
+    }
+    
+
 }
 
 export default ServicioInsumos

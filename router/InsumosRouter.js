@@ -11,7 +11,11 @@ class InsumosRouter {
     start() {
         this.router.get('/', validarToken,  this.controlador.traerInsumos)
         this.router.post('/', validarToken,  this.controlador.crearInsumo)
-        this.router.delete('/', validarToken,  this.controlador.crearInsumo)
+        this.router.delete('/', validarToken,  this.controlador.eliminarInsumo)
+        this.router.put('/update_name', validarToken, this.controlador.modificarInsumoNombre)
+        this.router.put('/update_qtt', validarToken, this.controlador.modificarInsumoCantidad)
+        this.router.put('/update_unitcost', validarToken, this.controlador.modificarInsumoCostoUnidad)
+        this.router.put('/update_unitmeasurement', validarToken, this.controlador.modificarInsumoUnidadMedida)
 
         return this.router
     }
