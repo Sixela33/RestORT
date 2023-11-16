@@ -1,10 +1,9 @@
-import Login from "./Components/Login";
+import FormuLogin from "./Components/FormuLogin";
 
 function App() {
   return (
     <div>
-      <Login/>
-      <p>Policiaa</p>
+      <FormuLogin />
     </div>
   );
 }
