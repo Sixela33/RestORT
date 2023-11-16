@@ -7,18 +7,15 @@ function FormuLogin() {
   const [ingresoPermitido, setIngresoPermitido] = useState(false);
 
   const loguear = async (valores, { resetForm }) => {
-    console.log(valores);
-    // lo que enviamos a la api/server
     const url = "/api/users/login";
     try {
       const response = await fetchData(url, "POST", valores);
       if (response.token) {
-        // Si la respuesta es exitosa, puedes realizar acciones adicionales aquí
         setClave(response.token);
         console.log("Inicio de sesión exitoso");
         setIngresoPermitido(true);
+        
       } else {
-        // Si la respuesta no es exitosa, puedes manejar errores o mostrar un mensaje al usuario
         console.error("Inicio de sesión fallido");
       }
     } catch (error) {
