@@ -33,7 +33,7 @@ function FormuLogin() {
           const url = "/api/users/login";
           try {
             const response = await fetchData(url, "POST", valores);
-            if (response.ok) {
+            if (response.token) {
               // Si la respuesta es exitosa, puedes realizar acciones adicionales aquí
               setClave(response.token);
               console.log("Inicio de sesión exitoso");
