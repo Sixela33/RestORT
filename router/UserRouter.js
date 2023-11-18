@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import express from 'express'
 import ControladorUsers from '../controlador-intermediario/ControladorUsers.js'
 import validarToken from '../middlewares/middlewares.js'
 

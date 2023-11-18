@@ -24,6 +24,16 @@ class ServicioInsumos {
         }
         return await this.model.traerInsumos(id)
     }
+
+    editarInsumo = async ({id, nombre, cantidad, costoXunidad, unidadDeMedida}) => {
+        const result = validarCreacionDeInsumo({nombre, cantidad, costoXunidad, unidadDeMedida})
+
+        if (!result.result){
+            throw { message: result.error, status: 422 }
+        }
+
+        return await this.model.editarInsumoxID(id, nombre, cantidad, costoXunidad, unidadDeMedida)
+    }
 }
 
 export default ServicioInsumos
