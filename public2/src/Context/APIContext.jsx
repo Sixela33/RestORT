@@ -18,16 +18,20 @@ export const ApiProvider = ({ children }) => {
       };
 
       const response = await fetch(url, options);
-      const result = await response.json();
-      return result;
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error(`Error al realizar ${method} request a ${url}`, error);
       throw error;
     }
   };
 
+  const logout = () => {
+    setClave("");
+  };
+
   return (
-    <ApiContext.Provider value={{ fetchData, setClave }}>
+    <ApiContext.Provider value={{ fetchData, setClave, logout }}>
       {children}
     </ApiContext.Provider>
   );

@@ -1,10 +1,13 @@
-import FormuLogin from "./Components/FormuLogin";
+import { BrowserRouter } from "react-router-dom";
+import LayoutContainer from "./Components/LayoutContainer";
 
 function App() {
   return (
-    <div>
-      <FormuLogin />
-    </div>
+    <>
+      <BrowserRouter>
+        <LayoutContainer />
+      </BrowserRouter>
+    </>
   );
 }
 

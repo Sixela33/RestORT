@@ -1,65 +1,84 @@
 import ModeloPostgres from "../modelo-db/DAO/ModeloPostgres.js";
-import Jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt'
+import Jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import {
-    validarUserCreacion,
-    validarUserLogin
-} from "./validaciones/validacionesUser.js"
+  validarUserCreacion,
+  validarUserLogin,
+} from "./validaciones/validacionesUser.js";
 
 class ServicioUsers {
-    constructor() {
-        this.model = new ModeloPostgres()
+  constructor() {
+    this.model = new ModeloPostgres();
+  }
+
+  // prueba
+  getUsuarios = async () => {
+    const usuarios = this.model.getUsuarios();
+    return usuarios;
+  };
+
+  crearUsuario = async ({
+    nombre,
+    contrasena,
+    documento,
+    esAdmin,
+    esSuperUser,
+  }) => {
+    const result = validarUserCreacion({
+      nombre,
+      contrasena,
+      documento,
+      esAdmin,
+      esSuperUser,
+    });
+
+    if (!result.result) {
+      throw { message: result.error, status: 422 };
     }
 
-    // prueba
-    getUsuarios = async () => {
-        const usuarios = this.model.getUsuarios()
-        return usuarios
+    const usuarioExistente = await this.model.getUsuarioXdocumento(documento);
+
+    if (usuarioExistente) {
+      throw { message: "Este usuario ya existe", status: 409 };
     }
 
-    crearUsuario = async ({nombre, contrasena, documento, esAdmin, esSuperUser}) => {
-        const result = validarUserCreacion({nombre, contrasena, documento, esAdmin, esSuperUser})
-        
-        if (!result.result){
-            throw {message: result.error, status: 422 }
-        }
+    const contrasenaHash = await bcrypt.hash(contrasena, 10);
+    const usuario = await this.model.crearUsuario(
+      documento,
+      nombre,
+      contrasenaHash,
+      esAdmin,
+      esSuperUser
+    );
 
-        const usuarioExistente = await this.model.getUsuarioXdocumento(documento)
+    return usuario;
+  };
 
-        if (usuarioExistente){
-            throw {message: "Este usuario ya existe", status: 409}
-        }
-
-        const contrasenaHash = await bcrypt.hash(contrasena, 10)
-        const usuario = await this.model.crearUsuario(documento, nombre, contrasenaHash, esAdmin, esSuperUser)
-
-        return usuario
+  iniciarSesion = async ({ documento, contrasena }) => {
+    const result = validarUserLogin({ documento, contrasena });
+    if (!result.result) {
+      throw { message: result.error, status: 422 };
     }
 
-    iniciarSesion = async ({documento, contrasena}) => {
+    const usuario = await this.model.getUsuarioXdocumento(documento);
 
-        const result = validarUserLogin({documento, contrasena})
-        if (!result.result){
-            throw {message: result.error, status: 422 }
-        }
-
-        const usuario = await this.model.getUsuarioXdocumento(documento)
-
-        if (!usuario){
-            throw {message: "Datos de sesion invalidos", status: 401}
-        }
-
-        const contraCorrecta = await bcrypt.compare(contrasena, usuario.contrasena);
-        if (contraCorrecta){
-            delete usuario.contrasena
-            const token = await Jwt.sign(usuario, process.env.CLAVE_SECRETA);
-            return token
-        }
-
-        throw {message: "Error desconocido", status: 500}
+    if (!usuario) {
+      throw { message: "Datos de sesion invalidos", status: 401 };
     }
-    
-    hacerAdmin = async () => {}
+
+    const contraCorrecta = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (contraCorrecta) {
+      delete usuario.contrasena;
+      const token = await Jwt.sign(usuario, process.env.CLAVE_SECRETA);
+      return token;
+    } else {
+      throw { message: "Datos de sesion invalidos", status: 401 };
+    }
+
+    throw { message: "Error desconocido", status: 500 };
+  };
+
+  hacerAdmin = async () => {};
 }
 
-export default ServicioUsers
+export default ServicioUsers;

@@ -8,22 +8,18 @@ function FormuLogin() {
 
   const loguear = async (valores, { resetForm }) => {
     const url = "/api/users/login";
-    try {
-      const response = await fetchData(url, "POST", valores);
-      if (response.token) {
-        setClave(response.token);
-        console.log("Inicio de sesión exitoso");
-        setIngresoPermitido(true);
-        
-      } else {
-        console.error("Inicio de sesión fallido");
-      }
-    } catch (error) {
-      console.error("Error al realizar la solicitud:", error);
+
+    const response = await fetchData(url, "POST", valores);
+    if (response.token) {
+      setClave(response.token);
+      console.log("Inicio de sesión exitoso");
+      setIngresoPermitido(true);
+    } else {
+      console.error("Inicio de sesión fallido");
     }
 
     resetForm();
-  }
+  };
 
   const hacerValidaciones = (valores) => {
     let errores = {};
@@ -39,7 +35,7 @@ function FormuLogin() {
       errores.contrasena = "Debes ingresar una password";
     }
     return errores;
-  }
+  };
 
   return (
     <>
