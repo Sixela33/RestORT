@@ -12,7 +12,7 @@ class ControladorInsumos {
            res.status(201)
         } catch (error) {
             console.log(error)
-            return res.status(500).send(error)
+            return res.status(error.status).send(error.message)
         }
     }
     
@@ -22,7 +22,16 @@ class ControladorInsumos {
             res.status(200).json(data)
         } catch (error) {
             console.log(error)
-            return res.status(500).send(error)
+            return res.status(error.status).send(error.message)
+        }
+    }
+
+    editarInsumo = async (req, res) => {
+        try {
+            const insumoEditado = await this.servicio.editarInsumo(req)
+        } catch (error) {
+            console.log(error)
+            return res.status(error.status).send(error.message)
         }
     }
 }

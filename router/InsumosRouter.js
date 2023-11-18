@@ -1,4 +1,4 @@
-import express, { Router } from 'express'
+import express from 'express'
 import validarToken from '../middlewares/middlewares.js'
 import ControladorInsumos from '../controlador-intermediario/ControladorInsumos.js'
 
@@ -9,9 +9,9 @@ class InsumosRouter {
     }
 
     start() {
-        this.router.get('/', validarToken,  this.controlador.traerInsumos)
-        this.router.post('/', validarToken,  this.controlador.crearInsumo)
-        this.router.delete('/', validarToken,  this.controlador.crearInsumo)
+        this.router.get('/', validarToken, this.controlador.traerInsumos)
+        this.router.post('/', validarToken, this.controlador.crearInsumo)
+        this.router.patch('/', validarToken, this.controlador.editarInsumo)
 
         return this.router
     }

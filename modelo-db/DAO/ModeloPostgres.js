@@ -34,7 +34,6 @@ class ModeloPostgres {
     }
 
     crearInsumo = async (nombre, cantidad, costoXunidad, unidadDeMedida) => {
-        console.log([nombre, cantidad, costoXunidad, unidadDeMedida])
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
         CnxPostgress.db.query("INSERT INTO insumos nombre, cantidad, costoXunidad, unidadDeMedida) VALUES ($1, $2, $3, $4, $5);",
         [nombre, cantidad, costoXunidad, unidadDeMedida])
@@ -52,6 +51,22 @@ class ModeloPostgres {
         return res.rows
     }
 
+    editarInsumoxID = async (id, nombre, cantidad, costoXunidad, unidadDeMedida) => {
+        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
+
+        const existeInsumo = await CnxPostgress.db.query("SELECT * FROM insumos WHERE insumoID = $1;", [id]);
+
+        if (existeInsumo.rows.length === 0) {
+            throw { message: "No se encontró el insumo con el ID proporcionado", status: 404 }
+        }
+
+        const resultado = await CnxPostgress.db.query(
+            "UPDATE insumos SET nombre = $2, cantidad = $3, costoXunidad = $4, unidadDeMedida = $5 WHERE insumoID = $1 RETURNING *;",
+            [id, nombre, cantidad, costoXunidad, unidadDeMedida]
+        );
+
+        return resultado.rows[0];
+    }
 }
 
 export default ModeloPostgres
