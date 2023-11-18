@@ -1,23 +1,13 @@
 import { Formik } from "formik";
-import React, { useState } from "react";
 import { useApi } from "../Context/APIContext";
+import { useNavigate } from "react-router-dom";
 
 function FormuLogin() {
-  const { fetchData, setClave } = useApi();
-  const [ingresoPermitido, setIngresoPermitido] = useState(false);
+  const { ingresoPermitido, login } = useApi();
+  const navigate = useNavigate();
 
   const loguear = async (valores, { resetForm }) => {
-    const url = "/api/users/login";
-
-    const response = await fetchData(url, "POST", valores);
-    if (response.token) {
-      setClave(response.token);
-      console.log("Inicio de sesión exitoso");
-      setIngresoPermitido(true);
-    } else {
-      console.error("Inicio de sesión fallido");
-    }
-
+    login(valores);
     resetForm();
   };
 
@@ -87,7 +77,7 @@ function FormuLogin() {
               <div className="error">{errors.contrasena}</div>
             )}
             <button type="submit">Iniciar Sesion</button>
-            {ingresoPermitido && <p className="exito">Ingreso admitido</p>}
+            {ingresoPermitido && navigate("/")}
           </form>
         )}
       </Formik>

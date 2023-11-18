@@ -1,3 +1,5 @@
+// SEGUN LA DOCUMENTACION DE ANT DESING ESTA DEPRECADA ESTA OPOCION, SE USA MENU LIST ITEM
+
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import {
@@ -12,7 +14,6 @@ import {
 import { useApi } from "../Context/APIContext";
 
 const MenuList = () => {
-  const { logout } = useApi();
   return (
     <Menu theme="dark" mode="inline" className="menu-bar">
       <Menu.Item key="home" icon={<HomeOutlined />}>
@@ -36,7 +37,7 @@ const MenuList = () => {
           <Link to={`/agregarIngrediente`}>Agregar</Link>
         </Menu.Item>
       </Menu.SubMenu>
-      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={logout()}>
+      <Menu.Item key="logout" icon={<LogoutOutlined />}>
         <Link to={`/logout`}>Logout</Link>
       </Menu.Item>
     </Menu>
