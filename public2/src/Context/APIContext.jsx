@@ -1,11 +1,13 @@
 // En apiContext.js
 import { createContext, useState, useContext } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
   const [clave, setClave] = useState(null);
-  const [ingresoPermitido, setIngresoPermitido] = useState(false);
+  const [user, setUser] = useState(null);
+
   const fetchData = async (url, method = "GET", body = null) => {
     try {
       const options = {
@@ -35,22 +37,15 @@ export const ApiProvider = ({ children }) => {
   const login = async (usuario) => {
     const url = "/api/users/login";
 
-    try {
-      const data = await fetchData(url, "POST", usuario);
+    const response = await fetchData(url, "POST", usuario);
+    if (response.token) {
+      setClave(response.token);
+      const decoded = jwtDecode(response.token);
+      console.log(decoded)
+      setUser(decoded);
+    } else {
+      console.error("Inicio de sesión fallido");
 
-      // Verificando si el token está presente en la respuesta
-      if (data.token) {
-        setClave(data.token);
-        setIngresoPermitido(true);
-      }
-    } catch (error) {
-      // Manejando errores al realizar la solicitud
-      console.error("Hubo un problema con la solicitud:", error);
-
-      // Puedes propagar el error nuevamente si es necesario
-      throw error;
-    }
-  };
 
   const signin = async (usuario) => {
     const url = "/api/users/register";
@@ -73,12 +68,12 @@ export const ApiProvider = ({ children }) => {
 
   const logout = () => {
     setClave("");
-    setIngresoPermitido(false);
+    setUser(null);
   };
 
   return (
     <ApiContext.Provider
-      value={{ fetchData, setClave, logout, login, ingresoPermitido, signin }}
+      value={{ fetchData, logout, login, user }}
     >
       {children}
     </ApiContext.Provider>

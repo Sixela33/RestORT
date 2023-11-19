@@ -7,8 +7,8 @@ const validarCreacionDeInsumo = insumo => {
         costoXunidad: Joi.number().required(),
         unidadDeMedida: Joi.string().alpha().default("KG")
     })
-
-    const { error } = userSchema.validate(user)
+    
+    const { error } = insumoSchema.validate(insumo)
     if (error) {
         return {result: false, error: error.details[0].message}
     } 
@@ -20,7 +20,7 @@ const validarBuscarInsumo = id => {
         id: Joi.number()
     })
     
-    const { error } = userSchema.validate(user)
+    const { error } = insumoSchema.validate(id)
     if (error) {
         return {result: false, error: error.details[0].message}
     } 
