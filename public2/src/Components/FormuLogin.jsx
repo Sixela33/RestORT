@@ -1,4 +1,4 @@
-import { Formik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useApi } from "../Context/APIContext";
 import { useNavigate } from "react-router-dom";
 
@@ -37,48 +37,35 @@ function FormuLogin() {
         validate={hacerValidaciones}
         onSubmit={loguear}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleSubmit,
-          handleChange,
-          handleBlur,
-        }) => (
-          <form
-            action="/users/login"
-            className="formulario"
-            onSubmit={handleSubmit}
-          >
+        {({ errors }) => (
+          <Form className="formulario">
             <label htmlFor="documento">Usuario</label>
-            <input
+            <Field
               type="text"
               name="documento"
               id="documento"
               placeholder="Username"
-              value={values.documento}
-              onChange={handleChange}
-              onBlur={handleBlur}
             />
-            {touched.documento && errors.documento && (
-              <div className="error">{errors.documento}</div>
-            )}
+            <ErrorMessage
+              name="documento"
+              component={() => <div className="error">{errors.documento}</div>}
+            />
+
             <label htmlFor="contrasena">Password</label>
-            <input
+            <Field
               placeholder="Password"
               type="password"
               name="contrasena"
               id="contrasena"
-              value={values.contrasena}
-              onChange={handleChange}
-              onBlur={handleBlur}
             />
-            {touched.contrasena && errors.contrasena && (
-              <div className="error">{errors.contrasena}</div>
-            )}
+            <ErrorMessage
+              name="contrasena"
+              component={() => <div className="error">{errors.contrasena}</div>}
+            />
+
             <button type="submit">Iniciar Sesion</button>
             {ingresoPermitido && navigate("/")}
-          </form>
+          </Form>
         )}
       </Formik>
     </>
