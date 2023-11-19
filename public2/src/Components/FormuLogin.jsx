@@ -65,7 +65,7 @@ function FormuLogin() {
 
             <button type="submit">Iniciar Sesion</button>
             {user && navigate("/")}
-          </form>
+          </Form>
 
         )}
       </Formik>

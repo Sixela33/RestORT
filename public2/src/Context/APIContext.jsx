@@ -45,7 +45,8 @@ export const ApiProvider = ({ children }) => {
       setUser(decoded);
     } else {
       console.error("Inicio de sesión fallido");
-
+    }
+  }
 
   const signin = async (usuario) => {
     const url = "/api/users/register";
