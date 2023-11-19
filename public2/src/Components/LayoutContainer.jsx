@@ -7,6 +7,7 @@ import HomeContainer from "./HomeContainer";
 import FormuLogin from "./FormuLogin";
 import MenuListItem from "./MenuListItem";
 import ProtectedRoute from "./ProtectedRoute";
+import FormuRegistro from "./FormuRegistro";
 const { Sider, Content } = Layout;
 function LayoutContainer() {
   return (
@@ -18,11 +19,7 @@ function LayoutContainer() {
       <Content>
         <Routes>
           <Route exact path="/login" element={<FormuLogin />} />
-          <Route
-            exact
-            path="/signin"
-            element={<div>ACA VA EL FORM PARA Registrarse</div>}
-          />
+          <Route exact path="/signin" element={<FormuRegistro />} />
           <Route element={<ProtectedRoute />}>
             <Route exact path="/" element={<HomeContainer />} />
             <Route
