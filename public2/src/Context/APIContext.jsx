@@ -34,7 +34,7 @@ export const ApiProvider = ({ children }) => {
     if (response.token) {
       setClave(response.token);
       const decoded = jwtDecode(response.token);
-      console.log(decoded)
+      console.log(decoded);
       setUser(decoded);
     } else {
       console.error("Inicio de sesión fallido");
@@ -46,9 +46,30 @@ export const ApiProvider = ({ children }) => {
     setUser(null);
   };
 
+  const cargarInsumos = async () => {
+    const url = "/api/insumos";
+    let data = await fetchData(url);
+    console.log(data);
+    return data;
+  };
+
+  const agregarInsumo = async () => {
+    let resultado;
+    const url = "/api/insumos";
+    let data = await fetchData(url, "POST");
+    data.ok ? (resultado = true) : (resultado = false);
+    return resultado;
+  };
   return (
     <ApiContext.Provider
-      value={{ fetchData, logout, login, user }}
+      value={{
+        fetchData,
+        logout,
+        login,
+        user,
+        cargarInsumos,
+        agregarInsumo,
+      }}
     >
       {children}
     </ApiContext.Provider>

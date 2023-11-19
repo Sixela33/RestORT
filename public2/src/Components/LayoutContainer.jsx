@@ -1,34 +1,31 @@
 import { Routes, Route } from "react-router-dom";
 import { Layout } from "antd";
-import "./navbar.css";
-import Logo from "./Logo";
+
 // import MenuList from "./MenuList";
 import HomeContainer from "./HomeContainer";
 import FormuLogin from "./FormuLogin";
 import MenuListItem from "./MenuListItem";
 import ProtectedRoute from "./ProtectedRoute";
+import FormuRegistro from "./FormuRegistro";
+import VerIngredientes from "./VerIngredientes";
+import FormuAgregarIngrediente from "./FormuAgregarIngrediente";
 const { Sider, Content } = Layout;
 function LayoutContainer() {
   return (
     <Layout>
       <Sider className="sidebar">
-        <Logo />
         <MenuListItem />
       </Sider>
       <Content>
         <Routes>
           <Route exact path="/login" element={<FormuLogin />} />
-          <Route
-            exact
-            path="/signin"
-            element={<div>ACA VA EL FORM PARA Registrarse</div>}
-          />
+          <Route exact path="/signin" element={<FormuRegistro />} />
           <Route element={<ProtectedRoute />}>
             <Route exact path="/" element={<HomeContainer />} />
             <Route
               exact
               path="/ingredientes"
-              element={<div>ACA VA LA TABLA CON LOS INGREDIENTES</div>}
+              element={<VerIngredientes />}
               // <IngredientesContainer />}
             />
             {/* <Route
@@ -44,7 +41,7 @@ function LayoutContainer() {
             <Route
               exact
               path="/agregarIngrediente"
-              element={<div>ACA VA EL FORM PARA AGREGAR UN INGREDIENTE</div>}
+              element={<FormuAgregarIngrediente />}
               // <AgregarIngrediente />}
             />
             {/* <Registro /> */}

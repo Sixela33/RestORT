@@ -12,10 +12,12 @@ import {
   ReadOutlined,
 } from "@ant-design/icons";
 import { useApi } from "../Context/APIContext";
+import Logo from "./Logo";
 
 const MenuList = () => {
   return (
     <Menu theme="dark" mode="inline" className="menu-bar">
+      <Logo />
       <Menu.Item key="home" icon={<HomeOutlined />}>
         <Link to={`/`}>Home</Link>
       </Menu.Item>

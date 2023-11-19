@@ -11,6 +11,7 @@ import {
   ReadOutlined,
 } from "@ant-design/icons";
 import { useApi } from "../Context/APIContext";
+import Logo from "./Logo";
 
 const MenuListItem = () => {
   const navigate = useNavigate();
@@ -41,28 +42,28 @@ const MenuListItem = () => {
         { label: "Log out", icon: <LogoutOutlined />, key: "/logout" },
       ]);
     } else {
-      setItems([
-        { label: "Sign in", icon: <UsergroupAddOutlined />, key: "/signin" },
-        { label: "Log in", icon: <LoginOutlined />, key: "/login" },
-      ]);
+      setItems([{ label: "Log in", icon: <LoginOutlined />, key: "/login" }]);
     }
   }, [user]);
 
   return (
-    <Menu
-      className="menu-bar"
-      defaultSelectedKeys={[window.location.pathname]}
-      mode="inline"
-      theme="dark"
-      items={items}
-      onClick={({ key }) => {
-        if (key === "/logout") {
-          logout();
-        } else {
-          navigate(key);
-        }
-      }}
-    />
+    <>
+      <Logo />
+      <Menu
+        className="menu-bar"
+        defaultSelectedKeys={[window.location.pathname]}
+        mode="inline"
+        theme="dark"
+        items={items}
+        onClick={({ key }) => {
+          if (key === "/logout") {
+            logout();
+          } else {
+            navigate(key);
+          }
+        }}
+      />
+    </>
   );
 };
 
