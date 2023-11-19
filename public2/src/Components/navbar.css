@@ -26,14 +26,14 @@
   justify-content: center;
   font-size: 1.5rem;
   border-radius: 50%;
-  background: rgba(28, 17, 41, 0.88);
+  background: rgba(0, 0, 0, 0.88);
 }
 
 .menu-bar {
-  height: 88vh;
+  height: 100vh;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  font-size: 1rem;
+  gap: 20px;
+  font-size: 1.2rem;
 }
