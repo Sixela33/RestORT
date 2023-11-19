@@ -3,7 +3,7 @@ import { useApi } from "../Context/APIContext";
 import { useNavigate } from "react-router-dom";
 
 function FormuLogin() {
-  const { ingresoPermitido, login } = useApi();
+  const { user, login } = useApi();
   const navigate = useNavigate();
 
   const loguear = async (valores, { resetForm }) => {
@@ -64,8 +64,9 @@ function FormuLogin() {
             />
 
             <button type="submit">Iniciar Sesion</button>
-            {ingresoPermitido && navigate("/")}
-          </Form>
+            {user && navigate("/")}
+          </form>
+
         )}
       </Formik>
     </>
