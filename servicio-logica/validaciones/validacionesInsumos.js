@@ -2,10 +2,10 @@ import Joi from "joi";
 
 const validarCreacionDeInsumo = insumo => {
     const insumoSchema = Joi.object({
-        nombre: Joi.string().alpha().required().min(1).max(50), 
+        nombre: Joi.string().required().min(1).max(50), 
         cantidad: Joi.number().required(), 
         costoXunidad: Joi.number().required(),
-        unidadDeMedida: Joi.string().alpha().default("KG")
+        unidadDeMedida: Joi.string().default("KG")
     })
     
     const { error } = insumoSchema.validate(insumo)

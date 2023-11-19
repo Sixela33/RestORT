@@ -1,13 +1,11 @@
 import ServicioUsers from "../servicio-logica/ServicioUsers.js"
-import Jwt from 'jsonwebtoken';
-
 
 class ControladorUsers {
     constructor() {
         this.servico = new ServicioUsers()
     }
 
-    // crea un usuario normal, está hardcodeado que este va a ser un normie
+    // crea un usuario
     crearUsuario = async (req, res) => {
         try {
             await this.servico.crearUsuario(req.body)
@@ -27,7 +25,7 @@ class ControladorUsers {
                 // Enviamos el token de autenticacion al frontend
                 return res.status(200).json({ token: token })
             }
-            return res.status(401).json("Datos de sesion invalidos")
+            return res.status(401).send("Datos de sesion invalidos")
 
         } catch (error) {
             return res.status(error.status).send(error.message)

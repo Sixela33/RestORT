@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useApi } from "../Context/APIContext";
 
 export default function VerIngredientes() {
-  const { cargarIngredientes } = useApi();
+  const { fetchData } = useApi();
   const [ingredientes, setIngredientes] = useState(null);
 
   const mostrarIngredientes = async () => {
     try {
-      const data = await cargarInsumos();
-      console.log(data);
-      setIngredientes(data);
+      console.log("yappity")
+      const data = await fetchData('/api/insumos');
+      const BORRARPARAUSAR = JSON.stringify(data)
+      setIngredientes(BORRARPARAUSAR);
     } catch (error) {
       // Manejar el error, si es necesario
       console.error("Error al cargar ingredientes:", error);
@@ -19,5 +20,5 @@ export default function VerIngredientes() {
   useEffect(() => {
     mostrarIngredientes();
   }, []); // Este efecto se ejecutará una vez al montar el componente
-  return <div>{console.log(ingredientes)}</div>;
+  return <div>{ingredientes}</div>;
 }

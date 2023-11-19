@@ -53,13 +53,15 @@ export const ApiProvider = ({ children }) => {
     return data;
   };
 
-  const agregarInsumo = async () => {
+  const agregarInsumo = async (valores) => {
     let resultado;
     const url = "/api/insumos";
-    let data = await fetchData(url, "POST");
+    let data = await fetchData(url, "POST", valores);
+    console.log(data)
     data.ok ? (resultado = true) : (resultado = false);
     return resultado;
   };
+  
   return (
     <ApiContext.Provider
       value={{

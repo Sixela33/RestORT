@@ -3,11 +3,12 @@ import { useApi } from "../Context/APIContext";
 import { useState } from "react";
 
 function FormuRegistro() {
-  const { signin } = useApi();
+  const { fetchData } = useApi();
   const [usuarioCreado, setUsuarioCreado] = useState(false);
 
   const registrarUsuario = async (valores, { resetForm }) => {
-    signin(valores);
+    console.log(valores)
+    const result = await fetchData('api/users/register', 'POST', valores)
     resetForm();
     setUsuarioCreado(true);
     setTimeout(() => setUsuarioCreado(false), 3000);

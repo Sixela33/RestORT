@@ -17,22 +17,11 @@ class ServicioUsers {
     return usuarios;
   };
 
-  crearUsuario = async ({
-    nombre,
-    contrasena,
-    documento,
-    esAdmin,
-    esSuperUser,
-  }) => {
-    const result = validarUserCreacion({
-      nombre,
-      contrasena,
-      documento,
-      esAdmin,
-      esSuperUser,
-    });
+  crearUsuario = async ({nombre, contrasena, documento, esAdmin, esSuperUser}) => {
 
+    const result = validarUserCreacion({nombre, contrasena, documento, esAdmin, esSuperUser});
     if (!result.result) {
+      console.log(result)
       throw { message: result.error, status: 422 };
     }
 
@@ -43,13 +32,7 @@ class ServicioUsers {
     }
 
     const contrasenaHash = await bcrypt.hash(contrasena, 10);
-    const usuario = await this.model.crearUsuario(
-      documento,
-      nombre,
-      contrasenaHash,
-      esAdmin,
-      esSuperUser
-    );
+    const usuario = await this.model.crearUsuario(documento, nombre, contrasenaHash, esAdmin, esSuperUser);
 
     return usuario;
   };
@@ -75,7 +58,6 @@ class ServicioUsers {
       throw { message: "Datos de sesion invalidos", status: 401 };
     }
 
-    throw { message: "Error desconocido", status: 500 };
   };
 
   hacerAdmin = async () => {};
