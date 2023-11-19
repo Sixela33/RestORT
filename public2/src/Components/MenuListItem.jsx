@@ -14,11 +14,11 @@ import { useApi } from "../Context/APIContext";
 
 const MenuListItem = () => {
   const navigate = useNavigate();
-  const { logout, ingresoPermitido } = useApi();
+  const { logout, user } = useApi();
   const [items, setItems] = useState([]);
   // gracias al useNavigate se van a mapear lasrutas indicadas por la propiedad key de los items para navegar
   useEffect(() => {
-    if (ingresoPermitido) {
+    if (user) {
       setItems([
         { label: "Home", icon: <HomeOutlined />, key: "/" },
         {
@@ -46,7 +46,7 @@ const MenuListItem = () => {
         { label: "Log in", icon: <LoginOutlined />, key: "/login" },
       ]);
     }
-  }, [ingresoPermitido]);
+  }, [user]);
 
   return (
     <Menu

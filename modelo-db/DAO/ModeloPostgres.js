@@ -42,10 +42,12 @@ class ModeloPostgres {
     traerInsumos = async (id) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
         let res = []
+        console.log(id)
         if (id){
             res = await CnxPostgress.db.query("SELECT * FROM insumos WHERE insumoID = $1;", [id])
         } else {
             res = await CnxPostgress.db.query("SELECT * FROM insumos;")
+            console.log(res)
         }
        
         return res.rows
