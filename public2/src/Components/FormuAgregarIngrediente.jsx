@@ -7,25 +7,24 @@ function FormuAgregarIngrediente() {
   const [insumoCreado, setInsumoCreado] = useState(false);
 
   const agregarIngrediente = async (valores, { resetForm }) => {
+    // Convertir valores a números antes de enviar al backend
+    const valoresValidos = {
+      ...valores,
+      cantidad: parseFloat(valores.cantidad),
+      costoXunidad: parseFloat(valores.costoXunidad),
+    };
+    // Enviar los datos al backend
     try {
-      // Convertir valores a números antes de enviar al backend
-      const valoresValidos = {
-        ...valores,
-        cantidad: parseFloat(valores.cantidad),
-        costoXunidad: parseFloat(valores.costoXunidad),
-      };
-      // Enviar los datos al backend
-      const resultado = await agregarInsumo(valoresValidos);
-      console.log(resultado);
-      // Mostrar mensaje de éxito y resetear el formulario solo si la operación fue exitosa
+      const resultado = agregarInsumo(valoresValidos);
       if (resultado) {
         setInsumoCreado(true);
         setTimeout(() => setInsumoCreado(false), 3000);
-        resetForm();
       }
     } catch (error) {
       // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
       console.error("Error al agregar insumo:", error);
+    } finally {
+      resetForm();
     }
   };
 
@@ -80,7 +79,25 @@ function FormuAgregarIngrediente() {
               component={() => <div className="error">{errors.cantidad}</div>}
             />
 
-            <label htmlFor="costoXunidad">Costo</label>
+            <label htmlFor="unidadDeMedida">Unidad de medida</label>
+            <Field as="select" name="unidadDeMedida" id="unidadDeMedida">
+              <option value="" disabled>
+                Seleccione una opcion
+              </option>
+              <option value="UNIDADES">UNIDADES</option>
+              <option value="KG">KG</option>
+              <option value="GR">GR</option>
+              <option value="L">L</option>
+              <option value="ML">ML</option>
+            </Field>
+            <ErrorMessage
+              name="unidadDeMedida"
+              component={() => (
+                <div className="error">{errors.unidadDeMedida}</div>
+              )}
+            />
+
+            <label htmlFor="costoXunidad">Costo unitario</label>
             <Field
               placeholder="Costo"
               type="number"
@@ -91,23 +108,6 @@ function FormuAgregarIngrediente() {
               name="costoXunidad"
               component={() => (
                 <div className="error">{errors.costoXunidad}</div>
-              )}
-            />
-
-            <label htmlFor="unidadDeMedida">Unidad de medida</label>
-            <Field as="select" name="unidadDeMedida" id="unidadDeMedida">
-              <option value="" selected disabled>
-                Seleccione una opcion
-              </option>
-              <option value="KG">KG</option>
-              <option value="GR">GR</option>
-              <option value="L">L</option>
-              <option value="ML">ML</option>
-            </Field>
-            <ErrorMessage
-              name="unidadDeMedida"
-              component={() => (
-                <div className="error">{errors.unidadDeMedida}</div>
               )}
             />
 

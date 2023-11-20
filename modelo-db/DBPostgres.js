@@ -19,8 +19,8 @@ class CnxPostgress {
             console.log("Base de datos conectada!")
             CnxPostgress.connection = true
         } catch (error) {
-            console.log("error en la conexion", error)
-            throw error
+            console.log("Error en la conexion con la base de datos \n" + "=========================================================" + "\n" , error)
+            
         }
     }
 

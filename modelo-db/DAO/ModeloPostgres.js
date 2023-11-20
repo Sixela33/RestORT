@@ -35,19 +35,17 @@ class ModeloPostgres {
 
     crearInsumo = async (nombre, cantidad, costoXunidad, unidadDeMedida) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
-        CnxPostgress.db.query("INSERT INTO insumos nombre, cantidad, costoXunidad, unidadDeMedida) VALUES ($1, $2, $3, $4, $5);",
+        CnxPostgress.db.query("INSERT INTO insumos (nombre, cantidad, costoXunidad, unidadDeMedida) VALUES ($1, $2, $3, $4);",
         [nombre, cantidad, costoXunidad, unidadDeMedida])
     }
 
     traerInsumos = async (id) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
         let res = []
-        console.log(id)
         if (id){
             res = await CnxPostgress.db.query("SELECT * FROM insumos WHERE insumoID = $1;", [id])
         } else {
             res = await CnxPostgress.db.query("SELECT * FROM insumos;")
-            console.log(res)
         }
        
         return res.rows

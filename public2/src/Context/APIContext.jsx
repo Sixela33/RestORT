@@ -8,6 +8,7 @@ export const ApiContext = createContext();
 export const ApiProvider = ({ children }) => {
   const [clave, setClave] = useState(null);
   const [user, setUser] = useState(null);
+  const [loginError, setLoginError] = useState(null);
 
   // const fetchData = async (url, method = "GET", body = null) => {
   //   try {
@@ -39,12 +40,12 @@ export const ApiProvider = ({ children }) => {
         },
         data: body ? JSON.stringify(body) : null,
       };
-
       const response = await axios(url, options);
-      console.log(response);
+      console.log("Response data:", response.data);
       return response.data;
     } catch (error) {
       console.error(`Error al realizar ${method} request a ${url}`, error);
+      return error;
     }
   };
 
@@ -54,10 +55,9 @@ export const ApiProvider = ({ children }) => {
     if (response.token) {
       setClave(response.token);
       const decoded = jwtDecode(response.token);
-      console.log(decoded);
       setUser(decoded);
     } else {
-      console.error("Inicio de sesión fallido");
+      setLoginError("Inicio de sesión fallido");
     }
   };
 
@@ -74,10 +74,14 @@ export const ApiProvider = ({ children }) => {
   };
 
   const agregarInsumo = async (nuevoInsumo) => {
-    const url = "/api/insumos/";
-    let data = await fetchData(url, "POST", nuevoInsumo);
-
-    return data;
+    try {
+      const url = "/api/insumos/";
+      let data = await fetchData(url, "POST", nuevoInsumo);
+      return data.status === 200;
+    } catch (error) {
+      console.error("Error al agregar insumo:", error);
+      return false;
+    }
   };
   return (
     <ApiContext.Provider
@@ -88,6 +92,7 @@ export const ApiProvider = ({ children }) => {
         user,
         cargarInsumos,
         agregarInsumo,
+        loginError,
       }}
     >
       {children}

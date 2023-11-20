@@ -53,6 +53,17 @@ body {
   color: #1f1f1f;
 }
 
+.formulario input,
+.formulario select {
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px solid #e2e2e2;
+  font-size: 18px;
+  padding: 10px;
+  margin-bottom: 5px;
+  color: #1f1f1f;
+}
 .formulario input:focus {
   outline: none;
   border: 2px solid rgb(24, 13, 189);
@@ -60,8 +71,10 @@ body {
 
 .formulario .error {
   color: #9c0a0d;
+  margin-top: 0.7rem;
   font-weight: 600;
   font-size: 0.8rem;
+  text-align: center;
 }
 
 .formulario button[type="submit"] {

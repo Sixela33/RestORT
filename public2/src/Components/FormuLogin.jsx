@@ -3,7 +3,7 @@ import { useApi } from "../Context/APIContext";
 import { useNavigate } from "react-router-dom";
 
 function FormuLogin() {
-  const { user, login } = useApi();
+  const { user, login, loginError } = useApi();
   const navigate = useNavigate();
 
   const loguear = async (valores, { resetForm }) => {
@@ -77,6 +77,7 @@ function FormuLogin() {
               <div className="error">{errors.contrasena}</div>
             )}
             <button type="submit">Iniciar Sesion</button>
+            {loginError && <div className="error">{loginError}</div>}
             {user && navigate("/")}
           </form>
         )}
