@@ -7,10 +7,26 @@ function FormuAgregarIngrediente() {
   const [insumoCreado, setInsumoCreado] = useState(false);
 
   const agregarIngrediente = async (valores, { resetForm }) => {
-    agregarInsumo(valores);
-    setInsumoCreado(true);
-    setTimeout(() => setInsumoCreado(false), 3000);
-    resetForm();
+    try {
+      // Convertir valores a números antes de enviar al backend
+      const valoresValidos = {
+        ...valores,
+        cantidad: parseFloat(valores.cantidad),
+        costoXunidad: parseFloat(valores.costoXunidad),
+      };
+      // Enviar los datos al backend
+      const resultado = await agregarInsumo(valoresValidos);
+      console.log(resultado);
+      // Mostrar mensaje de éxito y resetear el formulario solo si la operación fue exitosa
+      if (resultado) {
+        setInsumoCreado(true);
+        setTimeout(() => setInsumoCreado(false), 3000);
+        resetForm();
+      }
+    } catch (error) {
+      // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
+      console.error("Error al agregar insumo:", error);
+    }
   };
 
   const hacerValidaciones = (valores) => {
@@ -36,8 +52,8 @@ function FormuAgregarIngrediente() {
       <Formik
         initialValues={{
           nombre: "",
-          cantidad: "",
-          costoXunidad: "",
+          cantidad: 0,
+          costoXunidad: 0,
           unidadDeMedida: "",
         }}
         validate={hacerValidaciones}
@@ -54,7 +70,7 @@ function FormuAgregarIngrediente() {
 
             <label htmlFor="cantidad">Cantidad</label>
             <Field
-              type="text"
+              type="number"
               name="cantidad"
               id="cantidad"
               placeholder="Cantidad"
@@ -67,7 +83,7 @@ function FormuAgregarIngrediente() {
             <label htmlFor="costoXunidad">Costo</label>
             <Field
               placeholder="Costo"
-              type="text"
+              type="number"
               name="costoXunidad"
               id="costoXunidad"
             />
@@ -79,12 +95,15 @@ function FormuAgregarIngrediente() {
             />
 
             <label htmlFor="unidadDeMedida">Unidad de medida</label>
-            <Field
-              placeholder="Unidad de medida"
-              type="text"
-              name="unidadDeMedida"
-              id="unidadDeMedida"
-            />
+            <Field as="select" name="unidadDeMedida" id="unidadDeMedida">
+              <option value="" selected disabled>
+                Seleccione una opcion
+              </option>
+              <option value="KG">KG</option>
+              <option value="GR">GR</option>
+              <option value="L">L</option>
+              <option value="ML">ML</option>
+            </Field>
             <ErrorMessage
               name="unidadDeMedida"
               component={() => (
@@ -93,9 +112,7 @@ function FormuAgregarIngrediente() {
             />
 
             <button type="submit">Agregar</button>
-            {insumoCreado && (
-              <p className="exito">Usuario creado con exito! </p>
-            )}
+            {insumoCreado && <p className="exito">Insumo creado con exito! </p>}
           </Form>
         )}
       </Formik>
