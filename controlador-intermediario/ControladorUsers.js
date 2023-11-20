@@ -38,8 +38,13 @@ class ControladorUsers {
 
     // prueba
     getUsuarios = async (req, res) => {
-        const users = await this.servico.getUsuarios()
-        res.json(users)
+        try {
+            const users = await this.servico.getUsuarios(req.body)
+            res.json(users)
+            
+        } catch (error) {
+            return res.status(error.status).send(error.message)
+        }
     }
 }
 

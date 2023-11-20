@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import "dotenv/config";
 import CnxPostgress from "./modelo-db/DBPostgres.js";
-import errorHandler from "./middlewares/errorHandler.js";
 
 import UserRouter from "./router/UserRouter.js";
 import InsumosRouter from "./router/InsumosRouter.js";

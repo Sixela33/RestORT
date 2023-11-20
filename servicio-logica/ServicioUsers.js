@@ -12,8 +12,8 @@ class ServicioUsers {
   }
 
   // prueba
-  getUsuarios = async () => {
-    const usuarios = this.model.getUsuarios();
+  getUsuarios = async ({ documento }) => {
+    const usuarios = this.model.getUsuarios(documento);
     return usuarios;
   };
 

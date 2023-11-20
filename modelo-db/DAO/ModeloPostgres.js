@@ -14,9 +14,15 @@ class ModeloPostgres {
         }
     }
 
-    getUsuarios = async () => {
+    getUsuarios = async (documento) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
-        const res = await CnxPostgress.db.query('SELECT * FROM usuarios')
+        let res = []
+        if (id){
+            res = await CnxPostgress.db.query("SELECT * FROM usuarios WHERE documento = $1;", [documento])
+        } else {
+            res = await CnxPostgress.db.query('SELECT * FROM usuarios')
+        }
+        
         return res.rows
     }
 

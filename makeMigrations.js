@@ -4,7 +4,8 @@ import CnxPostgress from "./modelo-db/DBPostgres.js"
 import ModeloPostgres from "./modelo-db/DAO/ModeloPostgres.js"
 
 const dummyVals = [
-   ['00000000000', 'super', 'qwerqwer', true, true]
+   ['00000000000', 'super', 'qwerqwer', true, true],
+   ['11111111111', 'man', 'qwerqwer', false, false]
 ]
 
 const hacerMigraciones = async () => {
