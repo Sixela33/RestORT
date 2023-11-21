@@ -13,7 +13,7 @@ class UserRouter {
         this.router.post('/login', this.controlador.iniciarSesion)
         
         // Endpoint de prueba
-        this.router.get('/', this.controlador.getUsuarios)
+        this.router.get('/:documento', this.controlador.getUsuarios)
         
         return this.router
     }

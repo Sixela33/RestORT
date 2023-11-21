@@ -1,6 +1,6 @@
 # server congfig
 PORT = 8080
-DATABASE = postgress
+DATABASE = postgres
 CLAVE_SECRETA = secretisimo
 
 # Postrgres Config

@@ -10,23 +10,13 @@ class ServicioInsumos {
   }
 
   crearInsumo = async ({ nombre, cantidad, costoXunidad, unidadDeMedida }) => {
-    const result = validarCreacionDeInsumo({
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidadDeMedida,
-    });
+    const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
 
-    await this.model.crearInsumo(
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidadDeMedida
-    );
+    await this.model.crearInsumo(nombre, cantidad, costoXunidad, unidadDeMedida);
   };
 
   traerInsumos = async ({ id }) => {
@@ -38,31 +28,14 @@ class ServicioInsumos {
     return await this.model.traerInsumos(id);
   };
 
-  editarInsumo = async ({
-    id,
-    nombre,
-    cantidad,
-    costoXunidad,
-    unidadDeMedida,
-  }) => {
-    const result = validarCreacionDeInsumo({
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidadDeMedida,
-    });
+  editarInsumo = async ({id, nombre, cantidad, costoXunidad, unidadDeMedida}) => {
+    const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
 
-    return await this.model.editarInsumoxID(
-      id,
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidadDeMedida
-    );
+    return await this.model.editarInsumoxID( id, nombre, cantidad, costoXunidad, unidadDeMedida );
   };
 }
 

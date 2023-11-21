@@ -71,7 +71,31 @@ class ModeloPostgres {
             [id, nombre, cantidad, costoXunidad, unidadDeMedida]
         );
 
-        return resultado.rows[0];
+        return resultado.rows[0]
+    }
+
+    crearPlatillo = async (insumos, nombre, valor) => {
+        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
+        
+        const ingredientes = insumos.map(par => par[0]);
+        const cantidad = insumos.map(par => par[1]);
+
+        await CnxPostgress.db.query(
+            'CALL AgregarIngredientesAlMenu($1, $2, $3, $4)',
+            [nombre,valor, ingredientes, cantidad]
+        )
+    }
+
+    getPlatilos = async (id) => {
+        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
+
+        if (id) {
+            res = await CnxPostgress.db.query("SELECT * FROM platillos WHERE platilloID = $1;", [id])
+        } else {
+            res = await CnxPostgress.db.query("SELECT * FROM platillos;")
+        }
+
+        return resultado.rows
     }
 }
 

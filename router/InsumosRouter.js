@@ -9,7 +9,7 @@ class InsumosRouter {
     }
 
     start() {
-        this.router.get('/', validarToken, this.controlador.traerInsumos)
+        this.router.get('/:id', validarToken, this.controlador.traerInsumos)
         this.router.post('/', validarToken, this.controlador.crearInsumo)
         this.router.patch('/', validarToken, this.controlador.editarInsumo)
 
