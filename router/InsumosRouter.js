@@ -12,6 +12,7 @@ class InsumosRouter {
         this.router.get('/:id?', validarToken, this.controlador.traerInsumos)
         this.router.post('/', validarToken, this.controlador.crearInsumo)
         this.router.patch('/', validarToken, this.controlador.editarInsumo)
+        this.router.delete('/', validarToken, this.controlador.eliminarInsumo)
 
         return this.router
     }

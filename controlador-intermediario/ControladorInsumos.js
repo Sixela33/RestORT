@@ -33,6 +33,15 @@ class ControladorInsumos {
             return res.status(error.status).send(error.message)
         }
     }
+
+    eliminarInsumo = async (req, res) => {
+        try {
+            await this.servicio.eliminarInsumo(req.body)
+        } catch (error) {
+            console.log(error)
+            return res.status(error.status).send(error.message)
+        }
+    }
 }
 
 export default ControladorInsumos

@@ -37,6 +37,16 @@ class ServicioInsumos {
 
     return await this.model.editarInsumoxID( id, nombre, cantidad, costoXunidad, unidadDeMedida );
   };
+
+  eliminarInsumo = async ({id}) => {
+    const result = validarBuscarInsumo({ id })
+
+    if (!result.result) {
+      throw { message: result.error, status: 422 };
+    }
+
+    return await this.model.eliminarInsumo(id)
+  }
 }
 
 export default ServicioInsumos;

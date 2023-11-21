@@ -17,6 +17,8 @@ class ModeloPostgres {
         }
     }
 
+    // --------------------[USUARIOS]--------------------
+
     getUsuarios = async (documento) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
         let res = []
@@ -63,6 +65,8 @@ class ModeloPostgres {
             return { status: 500, error: 'Error interno del servidor' };
         }
     }
+
+    // --------------------[INSUMOS]--------------------
 
     crearInsumo = async (nombre, cantidad, costoXunidad, unidadDeMedida) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
@@ -114,13 +118,27 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-
             return { status: 500, error: 'Error interno del servidor' };
             
         }
 
         return resultado.rows[0]
     }
+
+    eliminarInsumo = async (id) => {
+        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
+        try {
+
+            await CnxPostgress.db.query("DELETE FROM insumo WHERE insumoID = $1;", [id])
+            
+        } catch (error) {
+            console.error('Error \n', error);
+            return { status: 500, error: 'Error interno del servidor' };
+        }
+
+    }
+
+    // --------------------[PLATILLOS]--------------------
 
     crearPlatillo = async (insumos, nombre, valor) => {
         if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
@@ -159,6 +177,8 @@ class ModeloPostgres {
 
         return resultado.rows
     }
+
+    // --------------------[TICKETS]--------------------
 
     crearTicket = async (platillos) => {
         if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");

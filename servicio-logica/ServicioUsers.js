@@ -26,7 +26,7 @@ class ServicioUsers {
     }
 
     const usuarioExistente = await this.model.getUsuarioXdocumento(documento);
-    
+
     if (usuarioExistente) {
       throw { message: "Este usuario ya existe", status: 409 };
     }
@@ -39,6 +39,7 @@ class ServicioUsers {
 
   iniciarSesion = async ({ documento, contrasena }) => {
     const result = validarUserLogin({ documento, contrasena });
+    
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }

@@ -20,7 +20,8 @@ const dummyIngredientes = [
 
 const dummyPlatillo = [
     // Array de ingredientes [ID, CANTIDAD], nombrePlatillo, a cuanto se vende
-    [[[1, 4], [3, 1]], "amvorgesa", 4]
+    [[[1, 4], [3, 1]], "amvorgesa", 4],
+    [[[3, 2], [1, 1], [4, 5]], "amvorgesa kintuple", 4],
 ]
 
 const dummyTicket = [
@@ -35,10 +36,8 @@ const hacerMigraciones = async () => {
             console.log("Haciendo las migraciones utilizando PostgreSQL");
             if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
 
-            
             await model.makeMigrations()
             
-            /*
             for (const val of dummyUsers) {
                 const contrasenaHash = await bcrypt.hash(val[2], 10)
                 await model.crearUsuario(val[0], val[1], contrasenaHash, val[3], val[4]);
@@ -55,7 +54,7 @@ const hacerMigraciones = async () => {
             for (const val of dummyPlatillo) {
                 await model.crearPlatillo(val[0], val[1], val[2])
             }
-            */
+
             for (const val of dummyTicket) {
                 await model.crearTicket(val)
             }
