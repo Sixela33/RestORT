@@ -9,6 +9,10 @@ class ModeloPostgres {
             if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
             const sql = fs.readFileSync('createTables.sql', 'utf8');
             await CnxPostgress.db.query(sql);
+            const sql2 = fs.readFileSync('createProcedures.sql', 'utf8');
+            await CnxPostgress.db.query(sql2);
+            
+            console.log("tuki")
         } catch (error) {
             console.error('Error al ejecutar las migraciones:', error);
         }
@@ -17,12 +21,26 @@ class ModeloPostgres {
     getUsuarios = async (documento) => {
         if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
         let res = []
-        if (id){
-            res = await CnxPostgress.db.query("SELECT * FROM usuarios WHERE documento = $1;", [documento])
-        } else {
-            res = await CnxPostgress.db.query('SELECT * FROM usuarios')
+        try {
+            if (documento){
+                console.log('1')
+                res = await CnxPostgress.db.query("SELECT * FROM usuarios WHERE documento = $1;", [documento])
+                console.log('1')
+    
+            } else {
+                console.log('2')
+                res = await CnxPostgress.db.query('SELECT * FROM usuarios')
+                console.log('2')
+            }
+            
+        } catch (error) {
+            console.error('Error al obtener usuarios:', error);
+        // En caso de error, envía una respuesta de error con el código 500 y un mensaje de error
+            return { status: 500, error: 'Error interno del servidor' };
         }
         
+        console.log(res)
+
         return res.rows
     }
 
@@ -96,6 +114,17 @@ class ModeloPostgres {
         }
 
         return resultado.rows
+    }
+
+    crearTicket = async (platillos) => {
+
+        const platillo = platillos.map(par => par[0]);
+        const cantidad = platillos.map(par => par[1]);
+
+        await CnxPostgress.db.query(
+            'CALL crearTicket($1, $2)',
+            [platillo, cantidad]
+        )
     }
 }
 

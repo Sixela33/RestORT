@@ -34,6 +34,7 @@ const hacerMigraciones = async () => {
 
             
             await model.makeMigrations()
+            console.log('asdf')
             for (const val of dummyUsers) {
                 const contrasenaHash = await bcrypt.hash(val[2], 10)
                 await model.crearUsuario(val[0], val[1], contrasenaHash, val[3], val[4]);

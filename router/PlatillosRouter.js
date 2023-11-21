@@ -9,7 +9,7 @@ class PlatillosRouter {
     }
 
     start() {
-        this.router.get('/:id', validarToken, this.controlador.getPlatillos)
+        this.router.get('/:id?', validarToken, this.controlador.getPlatillos)
         this.router.post('/', validarToken, this.controlador.crearPlatillo)
         
         return this.router

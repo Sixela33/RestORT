@@ -39,6 +39,7 @@ class ControladorUsers {
     // prueba
     getUsuarios = async (req, res) => {
         try {
+            console.log(req.params)
             const users = await this.servico.getUsuarios(req.params)
             res.json(users)
             
