@@ -19,9 +19,12 @@ const dummyIngredientes = [
 ]
 
 const dummyPlatillo = [
-
     // Array de ingredientes [ID, CANTIDAD], nombrePlatillo, a cuanto se vende
     [[[1, 4], [3, 1]], "amvorgesa", 4]
+]
+
+const dummyTicket = [
+    [[1, 5], [1, 3]]
 ]
 
 const hacerMigraciones = async () => {
@@ -34,7 +37,8 @@ const hacerMigraciones = async () => {
 
             
             await model.makeMigrations()
-            console.log('asdf')
+            
+            /*
             for (const val of dummyUsers) {
                 const contrasenaHash = await bcrypt.hash(val[2], 10)
                 await model.crearUsuario(val[0], val[1], contrasenaHash, val[3], val[4]);
@@ -51,6 +55,11 @@ const hacerMigraciones = async () => {
             for (const val of dummyPlatillo) {
                 await model.crearPlatillo(val[0], val[1], val[2])
             }
+            */
+            for (const val of dummyTicket) {
+                await model.crearTicket(val)
+            }
+
             console.log("Creación de platillos dummy exitosa!");
         
         } catch (err) {

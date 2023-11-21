@@ -18,15 +18,15 @@ class ServicioUsers {
   };
 
   crearUsuario = async ({nombre, contrasena, documento, esAdmin, esSuperUser}) => {
-
+    
     const result = validarUserCreacion({nombre, contrasena, documento, esAdmin, esSuperUser});
+
     if (!result.result) {
-      console.log(result)
       throw { message: result.error, status: 422 };
     }
 
     const usuarioExistente = await this.model.getUsuarioXdocumento(documento);
-
+    
     if (usuarioExistente) {
       throw { message: "Este usuario ya existe", status: 409 };
     }

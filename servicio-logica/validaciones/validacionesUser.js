@@ -1,14 +1,14 @@
 import Joi from "joi";
 
 const validarUserCreacion = user => {
-    console.log(user)
     const userSchema = Joi.object({
-        nombre: Joi.string().alpha().required().min(3).max(50),
+        nombre: Joi.string().required().min(3).max(50),
         contrasena: Joi.string().min(8).max(50),
-        documento: Joi.string().alphanum().length(11),
+        documento: Joi.string().length(11),
         esAdmin: Joi.boolean().default(false),
         esSuperUser: Joi.boolean().default(false)
     })
+    
     const { error } = userSchema.validate(user)
     if (error) {
         return {result: false, error: error.details[0].message}
@@ -18,7 +18,7 @@ const validarUserCreacion = user => {
 
 const validarUserLogin = user => {
     const userSchema = Joi.object({
-        documento: Joi.string().alphanum().length(11), 
+        documento: Joi.string().length(11), 
         contrasena: Joi.string().min(8).max(50)
     })
 
