@@ -20,12 +20,24 @@ const dummyIngredientes = [
 
 const dummyPlatillo = [
     // Array de ingredientes [ID, CANTIDAD], nombrePlatillo, a cuanto se vende
-    [[[1, 4], [3, 1]], "amvorgesa", 4],
-    [[[3, 2], [1, 1], [4, 5]], "amvorgesa kintuple", 4],
+    [[[1, 4], [3, 1]], "Hamburguesa cheddar", 4],
+    [[[3, 2], [1, 1], [4, 5]], "Hamburguesa kintuple", 4],
+    [[[1, 4], [3, 1]], "Hamburguesa clásica", 6],
+    [[[2, 2], [4, 3]], "Pizza margarita", 8],
+    [[[1, 2], [3, 2], [5, 1]], "Ensalada de pollo", 10],
+    [[[2, 1], [4, 2]], "Tacos de carne asada", 7],
+    [[[1, 3], [2, 2]], "Sopa de tomate", 5]
 ]
 
 const dummyTicket = [
-    [[1, 5], [1, 3]]
+    // [[id platillo, cantidad], [id platillo, caltidad], ..]
+    [[1, 5], [1, 3]],
+    [[1, 2], [2, 1]],
+    [[1, 2], [3, 1], [5, 3]],
+    [[2, 1], [4, 2]],
+    [[1, 3], [2, 2]],
+    [[3, 2], [4, 1]],
+    [[1, 1], [2, 1], [3, 1], [4, 1]]
 ]
 
 const hacerMigraciones = async () => {
@@ -37,6 +49,7 @@ const hacerMigraciones = async () => {
             if (!CnxPostgress.connection) throw new Error("No se establecio la conexion con la base de datos")
 
             await model.makeMigrations()
+            
             
             for (const val of dummyUsers) {
                 const contrasenaHash = await bcrypt.hash(val[2], 10)
@@ -50,11 +63,12 @@ const hacerMigraciones = async () => {
             }
             console.log("Creación de ingredientes dummy exitosa!");
 
+            
 
             for (const val of dummyPlatillo) {
                 await model.crearPlatillo(val[0], val[1], val[2])
             }
-
+            
             for (const val of dummyTicket) {
                 await model.crearTicket(val)
             }

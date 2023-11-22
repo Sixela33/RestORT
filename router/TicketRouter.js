@@ -10,7 +10,8 @@ class TicketsRouter {
 
     start() {
         // this.router.get('/:id', validarToken, this.controlador.getPlatillos)
-        this.router.post('/', validarToken, this.controlador.crearTicket)
+        this.router.post('/crear', validarToken, this.controlador.crearTicket)
+        this.router.post('/busacr', validarToken, this.controlador.obtenerTicketsXFecha)
         
         return this.router
     }

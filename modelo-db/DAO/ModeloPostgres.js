@@ -31,7 +31,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
         }
 
         return res.rows
@@ -49,7 +49,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
         }
         
     }
@@ -62,7 +62,7 @@ class ModeloPostgres {
     
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
         }
     }
 
@@ -77,7 +77,7 @@ class ModeloPostgres {
         } catch (error) {
             console.error('Error \n', error);
 
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
             
         }
     }
@@ -95,7 +95,7 @@ class ModeloPostgres {
         } catch (error) {
             console.error('Error \n', error);
 
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
             
         }
        
@@ -118,7 +118,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
             
         }
 
@@ -133,7 +133,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
         }
 
     }
@@ -154,7 +154,7 @@ class ModeloPostgres {
         } catch (error) {
             console.error('Error \n', error);
 
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
             
         }
     }
@@ -171,7 +171,7 @@ class ModeloPostgres {
         } catch (error) {
             console.error('Error \n', error);
 
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
 
         }
 
@@ -193,11 +193,52 @@ class ModeloPostgres {
             )
         } catch (error) {
             console.error('Error \n', error);
-
-            return { status: 500, error: 'Error interno del servidor' };
+            return { status: 500, error: error };
 
         }
         
+    }
+
+    obtenerTicketsXFecha = async (fecha) => {
+        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
+
+        try {
+    
+            const query = `SELECT t.ticketID, t.fechaEmision, p.nombre AS nombre_platillo, dt.cantidad, p.valor * dt.cantidad AS valor_total
+                FROM tickets t
+                JOIN DetallesTicket dt ON t.ticketID = dt.id_ticket
+                JOIN platillos p ON dt.id_platillo = p.platilloID
+                WHERE t.fechaEmision = $1;`
+
+            const resultado = await CnxPostgress.db.query(query, [fecha])
+            
+            console.log(resultado)
+            const groupedByTicketId = {};
+
+            resultado.forEach(fila => {
+                const ticketId = fila[0];
+            
+                if (!groupedByTicketId[ticketId]) {
+                    groupedByTicketId[ticketId] = [];
+                }
+            
+                groupedByTicketId[ticketId].push(fila);
+            });
+            console.log("==========================")
+            console.log(groupedByTicketId)
+            
+            const groupedResult = Object.values(groupedByTicketId);
+            
+            console.log("==========================")
+            console.log(groupedResult)
+            
+            return groupedResult
+
+        } catch (error) {
+            console.error('Error \n', error);
+            return { status: 500, error: error };
+        }
+
     }
 }
 

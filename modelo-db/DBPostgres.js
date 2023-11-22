@@ -1,8 +1,9 @@
-import pkg from 'pg';
-const { Pool } = pkg;
+import pg from 'pg';
+import "dotenv/config";
 
 class CnxPostgress {
-    static pool = new Pool({
+
+    static pool = new pg.Pool({
         user: process.env.POSTGRES_DB_USER,
         password: process.env.POSTGRES_DB_PASSWORD,
         host: process.env.POSTGRES_DB_HOST,
@@ -20,7 +21,6 @@ class CnxPostgress {
             CnxPostgress.connection = true
         } catch (error) {
             console.log("Error en la conexion con la base de datos \n" + "=========================================================" + "\n" , error)
-            
         }
     }
 
