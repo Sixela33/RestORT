@@ -34,6 +34,14 @@ class ControladorInsumos {
         }
     }
 
+    agregarStock = async (req, res) => {
+        try {
+            await this.servicio.agregarStock(req.body)
+        } catch (error) {
+            return res.status(error.status).send(error.message)
+        }
+    }
+
     eliminarInsumo = async (req, res) => {
         try {
             await this.servicio.eliminarInsumo(req.body)

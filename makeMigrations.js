@@ -13,8 +13,8 @@ const dummyIngredientes = [
     // nombre, cantidad, costoXunidad, unidadDeMedida
     ['Harina', 200, 100, 'KG'],
     ['Azúcar', 100, 200, 'KG'],
-    ['Huevos', 12, 300, 'UNIDADES'],
-    ['Leche', 30, 30, 'LITROS'],
+    ['Huevos', 50, 300, 'UNIDADES'],
+    ['Leche', 50, 30, 'LITROS'],
     ['Aceite', 100, 5, 'LITROS'],
 ]
 

@@ -22,7 +22,7 @@ class ServicioTickets {
     }
 
     organizarTickets = (resultado) => {
-        const groupedByTicketId = {};
+        const groupedByTicketId = {}
 
         resultado.forEach(fila => {
             const ticketId = fila[0];
@@ -47,14 +47,13 @@ class ServicioTickets {
 
     obtenerTicketsXFecha = async ({fecha1}) => {
         console.log(fecha1)
-        let fecha2 = null
-        /*
-        const result = validacionBuscaTicket({fecha1, fecha2});
+ 
+        const result = validacionBuscaTicket({fecha1, fecha1});
 
         if (!result.result) {
             throw { message: result.error, status: 422 };
         }
-        */
+        
         console.log(fecha1)
 
         let resultado = this.model.obtenerTicketsXRangoFecha(fecha1, fecha1)
@@ -72,17 +71,6 @@ class ServicioTickets {
         let resultado = this.model.obtenerTicketsXRangoFecha(fecha1, fecha2)
         resultado = this.organizarTickets(resultado)
         return resultado
-    }
-
-    obtenerPlatillosXRanfoFecha = async ({fecha1, fecha2}) => {
-        const result = validacionBuscaTicket({fecha1, fecha2});
-
-        if (!result.result) {
-            throw { message: result.error, status: 422 };
-        }
-
-        let resultado = this.model.obtenerTicketsXRangoFecha(fecha1, fecha2)
-        
     }
 
 }

@@ -18,7 +18,7 @@ class ServicioInsumos {
     }
 
     await this.model.crearInsumo(nombre, cantidad, costoXunidad, unidadDeMedida);
-  };
+  }
 
   traerInsumos = async ({ id }) => {
     const result = validarBuscarInsumo({ id });
@@ -27,7 +27,7 @@ class ServicioInsumos {
       throw { message: result.error, status: 422 };
     }
     return await this.model.traerInsumos(id);
-  };
+  }
 
   editarInsumo = async ({id, nombre, cantidad, costoXunidad, unidadDeMedida}) => {
     const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
@@ -37,7 +37,14 @@ class ServicioInsumos {
     }
 
     return await this.model.editarInsumoxID( id, nombre, cantidad, costoXunidad, unidadDeMedida );
-  };
+  }
+
+  agregarStock = async ({id, cantidad}) => {
+    const insumo = await this.traerInsumos({id}) 
+    insumo.cantidad += cantidad
+    
+    return await this.editarInsumo(insumo)
+  }
 
   eliminarInsumo = async ({id}) => {
     const result = validarBuscarInsumo({ id })

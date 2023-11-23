@@ -22,9 +22,9 @@ class ServicioSockets {
         })
 
         io.on('error', (error) => {
-            console.error('Error en la conexión del socket:', error);
+            console.error('Error en la conexión del socket:', error)
 
-        });
+        })
 
     }
 
