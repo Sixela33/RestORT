@@ -62,11 +62,11 @@ class ServicioUsers {
   };
 
   hacerAdmin = async ({ id }) => {
-    
+    await this.model.hacerAdmin(id)
   };
 
   quitarAdmin = async ({ id }) => {
-
+    await this.model.hacerAdmin(id)
   };
 }
 

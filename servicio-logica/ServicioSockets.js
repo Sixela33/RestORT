@@ -7,6 +7,7 @@ class ServicioSockets {
     }
 
     conectar = async (req) => {
+        const io = req.io
         io.on('connection', (socket) => {
             console.log(socket.id)
             this.socketsConnected.add(socket.id)
@@ -14,6 +15,10 @@ class ServicioSockets {
             socket.on('disconnect', () => {
                 this.socketsConnected.delete(socket.id)
             });
+
+            socket.on('modificacion', objeto => {
+                io.emit('update', objeto)   
+            }) 
         })
 
         io.on('error', (error) => {

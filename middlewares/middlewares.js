@@ -11,11 +11,39 @@ function validarToken(req, res, next) {
   try {
     const decoded = Jwt.verify(token, process.env.CLAVE_SECRETA)
     req.user = decoded
+    
     next()
   } catch (error) {
-    return res.status(401).json({ message: 'Token inválido' })
+      return res.status(401).json({ message: 'Token inválido' })
   }
 }
 
+function validarAdmin(req, res, next) {
+  try {
+    if (req.user.esadmin){
+      next()
+    }else {
 
-export { validarToken };
+      return res.status(401).json({ message: 'Necesitas ser aministrador para realizar esta accion' })
+    }
+
+  } catch (error) {
+    return res.status(401).json({ message: 'Necesitas ser aministrador para realizar esta accion' })
+  }
+}
+
+function validarSuperuser(req, res, next) {
+  try {
+    if (req.user.essuperuser){
+      next()
+    } else {
+
+      return res.status(401).json({ message: 'Necesitas ser aministrador para realizar esta accion' })
+    }
+
+  } catch (error) {
+    return res.status(401).json({ message: 'Necesitas ser aministrador para realizar esta accion' })
+  }
+}
+
+export { validarToken, validarAdmin, validarSuperuser };

@@ -26,7 +26,8 @@ class Server{
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());
-    
+    this.app.use(express.static('public/dist'))
+
     if (this.persistencia == 'postgres') {
       await CnxPostgress.conectar();
     }

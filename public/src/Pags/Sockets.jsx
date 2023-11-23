@@ -8,8 +8,10 @@ export default function Sockets() {
 
   useEffect(() => {
     
-    const socketInstance = io('http://localhost:8080');
+    const socketInstance = io({path: '/api/sockets'});
     setSocket(socketInstance)
+
+    socketInstance.connect()
 
     console.log(socketInstance)
     socketInstance.on('connect', () => {

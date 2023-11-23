@@ -10,6 +10,7 @@ class ServicioInsumos {
   }
 
   crearInsumo = async ({ nombre, cantidad, costoXunidad, unidadDeMedida }) => {
+    console.log({ nombre, cantidad, costoXunidad, unidadDeMedida })
     const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
 
     if (!result.result) {

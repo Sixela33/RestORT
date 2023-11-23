@@ -18,7 +18,6 @@ class ControladorInsumos {
     traerInsumos = async (req, res) => {
         try {
             const data =  await this.servicio.traerInsumos(req.params)
-            console.log(data)
             return res.status(200).send(data)
         } catch (error) {
             console.log(error)

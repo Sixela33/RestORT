@@ -11,8 +11,8 @@ class TicketsRouter {
     start() {
         // this.router.get('/:id', validarToken, this.controlador.getPlatillos)
         this.router.post('/crear', validarToken, this.controlador.crearTicket)
-        this.router.post('/busacrDia', validarToken, this.controlador.obtenerTicketsXFecha)
-        this.router.post('/busacrFranja', validarToken, this.controlador.obtenerTicketsXRangoFecha)
+        this.router.get('/busacrDia/:fecha1', validarToken, this.controlador.obtenerTicketsXFecha)
+        this.router.get('/busacrFranja/:fecha1/:fecha2?', validarToken, this.controlador.obtenerTicketsXRangoFecha)
         
         return this.router
     }

@@ -14,34 +14,11 @@ class ControladorTickets {
         }
     }
 
-    organizarTickets = (resultado) => {
-        const groupedByTicketId = {};
-
-        resultado.forEach(fila => {
-            const ticketId = fila[0];
-        
-            if (!groupedByTicketId[ticketId]) {
-                groupedByTicketId[ticketId] = {
-                    items: [],
-                    costoTotal: 0
-                };
-            }
-        
-            groupedByTicketId[ticketId].items.push(fila);
-            groupedByTicketId.costoTotal += fila.valor_total
-        });
-
-        console.log("==========================")
-        console.log(groupedByTicketId)
-        
-        const groupedResult = Object.values(groupedByTicketId);
-        return groupedResult
-    }
+    
 
     obtenerTicketsXFecha = async (req, res) => {
         try {
-            let resultado = await this.servicio.obtenerTicketsXFecha(req.body)
-            resultado = this.organizarTickets(resultado)
+            let resultado = await this.servicio.obtenerTicketsXFecha(req.params)
             return res.status(200).json(resultado)
         } catch (error) {
             return res.status(error.status).send(error.message)
@@ -51,8 +28,7 @@ class ControladorTickets {
     obtenerTicketsXRangoFecha = async (req, res) => {
         try {
             
-            let resultado = await this.servicio.obtenerTicketsXRangoFecha(req.body)
-            resultado = this.organizarTickets(resultado)
+            let resultado = await this.servicio.obtenerTicketsXRangoFecha(req.params)
             return res.status(200).json(resultado)
         } catch (error) {
             return res.status(error.status).send(error.message)

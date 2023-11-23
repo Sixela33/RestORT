@@ -11,11 +11,11 @@ const dummyUsers = [
 
 const dummyIngredientes = [
     // nombre, cantidad, costoXunidad, unidadDeMedida
-    ['Harina', 2, 100, 'KG'],
-    ['Azúcar', 1, 200, 'KG'],
+    ['Harina', 200, 100, 'KG'],
+    ['Azúcar', 100, 200, 'KG'],
     ['Huevos', 12, 300, 'UNIDADES'],
-    ['Leche', 1, 30, 'LITROS'],
-    ['Aceite', 0.5, 5, 'LITROS'],
+    ['Leche', 30, 30, 'LITROS'],
+    ['Aceite', 100, 5, 'LITROS'],
 ]
 
 const dummyPlatillo = [

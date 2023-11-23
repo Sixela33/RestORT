@@ -31,7 +31,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
 
         return res.rows
@@ -49,7 +49,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
         
     }
@@ -62,7 +62,7 @@ class ModeloPostgres {
     
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
     }
 
@@ -71,7 +71,7 @@ class ModeloPostgres {
             await CnxPostgress.db.query("UPDATE usuarios SET esAdmin = true WHERE userID = $1;", [id])
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
     }
 
@@ -81,7 +81,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error al obtener usuarios:', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
     }
 
@@ -95,7 +95,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
             
         }
     }
@@ -112,7 +112,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
         
         return res.rows
@@ -134,7 +134,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
             
         }
 
@@ -149,7 +149,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
 
     }
@@ -169,7 +169,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
             
         }
     }
@@ -185,7 +185,7 @@ class ModeloPostgres {
             
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
 
         }
 
@@ -207,59 +207,37 @@ class ModeloPostgres {
             )
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
 
         }
         
     }
 
-    obtenerTicketsXFecha = async (fecha) => {
-        if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
-
-        try {
-    
-            const query = `SELECT t.ticketID, t.fechaEmision, p.nombre AS nombre_platillo, dt.cantidad, p.valor * dt.cantidad AS valor_total
-                FROM tickets t
-                JOIN DetallesTicket dt ON t.ticketID = dt.id_ticket
-                JOIN platillos p ON dt.id_platillo = p.platilloID
-                WHERE t.fechaEmision = $1;`
-
-            const resultado = await CnxPostgress.db.query(query, [fecha])
-
-            groupedResult = organizarTickets(resultado)
-
-            return groupedResult
-
-        } catch (error) {
-            console.error('Error \n', error);
-            return { status: 500, error: error };
-        }
-
-    }
-
     obtenerTicketsXRangoFecha = async (fecha1, fecha2) => {
         if (!CnxPostgress.connection) throw new Error("No se estableció la conexión con la base de datos");
-
         try {
     
-            const query = `SELECT t.ticketID, t.fechaEmision, p.nombre AS nombre_platillo, dt.cantidad, p.valor * dt.cantidad AS valor_total
+            const query = `
+                SELECT t.ticketID, t.fechaEmision, p.nombre AS nombre_platillo, dt.cantidad, p.valor * dt.cantidad AS valor_total
                 FROM tickets t
                 JOIN DetallesTicket dt ON t.ticketID = dt.id_ticket
                 JOIN platillos p ON dt.id_platillo = p.platilloID
-                WHERE t.fechaEmision BETWEEN $1 AND $2;`
+                WHERE t.fechaEmision BETWEEN TO_DATE('2023-11-23', 'YYYY-MM-DD') AND TO_DATE('2023-11-23', 'YYYY-MM-DD');`
+     
+            
+            console.log(typeof fecha1)
+            console.log(fecha2)
 
             const resultado = await CnxPostgress.db.query(query, [fecha1, fecha2])
-            
-            //groupedResult = organizarTickets(resultado)
-            
-            return groupedResult
+
+            console.log(resultado)
+            return resultado
 
         } catch (error) {
             console.error('Error \n', error);
-            return { status: 500, error: error };
+            throw { status: 500, error: error };
         }
     }
-
 }
 
 export default ModeloPostgres
