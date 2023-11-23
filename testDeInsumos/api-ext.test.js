@@ -1,34 +1,39 @@
 import { expect } from "chai"
 import supertest from "supertest"
-import generador from './generador/insumo.js'
+import { response } from "express"
 
 
 const request = supertest('http://127.0.0.1:8080')
 
 describe('test apirestful', () => {
     describe('GET', () => {
-        it('debería retornar un status 200', async () => {
-            const reponse = await request.get('/api/insumos')
-            expect(reponse.status).to.eql(200)
+        it('debería retornar un insumo', async () => {
+            const res = await request.post('/api/users/login').send({ documento: "00000000000", contrasena: "qwerqwer" })
+
+            const response = await request.get('/api/insumos/1').set({"Authorization": res.body.token})
+  
+            expect(response.status).to.eql(200)
+            const insumo_buscado = response.body[0]
+
+            expect(insumo_buscado).to.include.keys('insumoid','nombre','cantidad','costoxunidad','unidaddemedida')
+
+            expect(insumo_buscado.insumoid).to.eql(1)
+            expect(insumo_buscado.nombre).to.eql('Harina')
+            expect(insumo_buscado.cantidad).to.eql("-89")
+            expect(insumo_buscado.costoxunidad).to.eql('100')
+            expect(insumo_buscado.unidaddemedida).to.eql('KG')
         })
     })
 
-    describe('POST', () => {
-        it('debería incorporar un insumo', async () => {
-            const insumo = generador.get()
-            //console.log(insumo)
+    describe('GET', () => {
+        it('debería retornar todos los insumos', async () => {
 
-            const response = await request.post('/api/insumos').send(insumo)
+            const res = await request.post('/api/users/login').send({ documento: "00000000000", contrasena: "qwerqwer" })
+
+            const response = await request.get('/api/insumos').set({"Authorization": res.body.token})
+
             expect(response.status).to.eql(200)
 
-            const insumoGuardado = response.body
-            //console.log(prodGuardado)
-            expect(insumoGuardado).to.include.keys('nombre','cantidad','costoXunidad','unidadDeMedida')
-
-            expect(insumoGuardado.nombre).to.eql(insumo.nombre)
-            expect(insumoGuardado.cantidad).to.eql(insumo.cantidad)
-            expect(insumoGuardado.costoXunidad).to.eql(insumo.costoXunidad)
-            expect(insumoGuardado.unidadDeMedida).to.eql(insumo.unidadDeMedida)
         })
     })
 })

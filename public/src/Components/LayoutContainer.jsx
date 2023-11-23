@@ -9,6 +9,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import FormuRegistro from "./FormuRegistro";
 import VerIngredientes from "./VerIngredientes";
 import FormuAgregarIngrediente from "./FormuAgregarIngrediente";
+import Sockets from "../Pags/Sockets";
+
 const { Sider, Content } = Layout;
 function LayoutContainer() {
   return (
@@ -20,31 +22,21 @@ function LayoutContainer() {
         <Routes>
           <Route exact path="/login" element={<FormuLogin />} />
           <Route exact path="/signin" element={<FormuRegistro />} />
+          <Route exact path="/sockets" element={<Sockets/>}/>
+
           <Route element={<ProtectedRoute />}>
             <Route exact path="/" element={<HomeContainer />} />
             <Route
               exact
               path="/ingredientes"
               element={<VerIngredientes />}
-              // <IngredientesContainer />}
+              
             />
-            {/* <Route
-            exact
-            path="/ingredientes/eliminar/:idIngrediente"
-            element={<EliminarIngrediente />}
-          />
-          <Route
-            exact
-            path="/ingredientes/actualizar/:idIngrediente"
-            element={<ActualizarIngrediente />}
-          /> */}
             <Route
               exact
               path="/agregarIngrediente"
               element={<FormuAgregarIngrediente />}
-              // <AgregarIngrediente />}
-            />
-            {/* <Registro /> */}
+            />          
             <Route
               exact
               path="/logout"
@@ -52,6 +44,7 @@ function LayoutContainer() {
             />
             {/* <Logout /> */}
           </Route>
+            
         </Routes>
       </Content>
     </Layout>

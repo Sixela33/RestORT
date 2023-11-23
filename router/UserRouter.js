@@ -1,6 +1,6 @@
 import express from 'express'
 import ControladorUsers from '../controlador-intermediario/ControladorUsers.js'
-import validarToken from '../middlewares/middlewares.js'
+import {validarToken} from '../middlewares/middlewares.js'
 
 class UserRouter {
     constructor() {

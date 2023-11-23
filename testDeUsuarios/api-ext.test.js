@@ -17,12 +17,14 @@ describe('test apirestful', () => {
         it('debería incorporar un usuario', async () => {
             const usuario = generador.get()
             //console.log(usuario)
+            
+            const res = await request.post('/api/users/login').send({ documento: "00000000000", contrasena: "qwerqwer" })
 
-            const response = await request.post('/api/users').send(usuario)
-            expect(response.status).to.eql(200)
+            const response = await request.post('/api/users/register').set({"Authorization": res.body.token}).send(usuario)
+            expect(response.status).to.eql(201)
 
             const usuarioGuardado = response.body
-            //console.log(prodGuardado)
+            //console.log(usuarioGuardado)
             expect(usuarioGuardado).to.include.keys('documento','nombre','contrasena','esAdmin','esSuperUser')
 
             expect(usuarioGuardado.documento).to.eql(usuario.documento)
@@ -30,6 +32,7 @@ describe('test apirestful', () => {
             expect(usuarioGuardado.contrasena).to.eql(usuario.contrasena)
             expect(usuarioGuardado.esAdmin).to.eql(usuario.esAdmin)
             expect(usuarioGuardado.esSuperUser).to.eql(usuario.esSuperUser)
+
         })
     })
 })

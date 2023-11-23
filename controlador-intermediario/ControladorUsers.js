@@ -8,8 +8,8 @@ class ControladorUsers {
     // crea un usuario
     crearUsuario = async (req, res) => {
         try {
-            await this.servico.crearUsuario(req.body)
-            return res.status(201).send("Usuario creado exitosamente")
+            const usuarioCreado = await this.servico.crearUsuario(req.body)
+            return res.status(201).send(usuarioCreado)
             
         } catch (error) {
             return res.status(error.status).send(error.message)
@@ -32,9 +32,22 @@ class ControladorUsers {
         }
     }
 
-    hacerAdmin = async (req, res) => {}
+    hacerAdmin = async (req, res) => {
+        try {
+            
+        } catch (error) {
+            return res.status(error.status).send(error.message)
+        }
+    }
 
-    quitarAdmin = async (req, res) => {}
+    quitarAdmin = async (req, res) => {
+        try {
+            
+        } catch (error) {
+            return res.status(error.status).send(error.message)
+
+        }
+    }
 
     // prueba
     getUsuarios = async (req, res) => {

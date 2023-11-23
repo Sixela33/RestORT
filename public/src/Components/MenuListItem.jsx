@@ -40,9 +40,13 @@ const MenuListItem = () => {
           ],
         },
         { label: "Log out", icon: <LogoutOutlined />, key: "/logout" },
+        
       ]);
     } else {
-      setItems([{ label: "Log in", icon: <LoginOutlined />, key: "/login" }]);
+      setItems([
+      { label: "socket", icon:<FileAddOutlined/>, key: "/sockets"},
+      { label: "Log in", icon: <LoginOutlined />, key: "/login" }]);
+      
     }
   }, [user]);
 

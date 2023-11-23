@@ -1,12 +1,12 @@
 import { expect } from "chai"
 import supertest from "supertest"
 import generador from './generador/insumo.js'
-import Server from "../server.js"
+import ExpressServer from "../server.js"
 
 describe('test apirestful', () => {
     describe('GET', () => {
         it('debería retornar un status 200', async () => {
-            const server = new Server(8081, process.env.DATABASE)
+            const server = new ExpressServer(8081, process.env.DATABASE)
             const app = await server.start()
 
             const request = supertest(app)
@@ -20,7 +20,7 @@ describe('test apirestful', () => {
 
     describe('POST', () => {
         it('debería incorporar un insumo', async () => {
-            const server = new Server(8081,process.env.DATABASE)
+            const server = new ExpressServer(8081,process.env.DATABASE)
             const app = await server.start()
 
             const request = supertest(app)

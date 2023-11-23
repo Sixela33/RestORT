@@ -36,13 +36,14 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE PROCEDURE crearTicket(
     id_platillo INT[],
-    cantidad_platillo INT[]
+    cantidad_platillo INT[],
+    estado_activo BOOLEAN
 ) AS $$ DECLARE
     i INT;
     id_ticket INT;
 BEGIN
-    INSERT INTO tickets (fechaEmision) 
-    VALUES (CURRENT_DATE)
+    INSERT INTO tickets (fechaEmision, estadoActivo) 
+    VALUES (CURRENT_DATE, estado_activo)
     RETURNING ticketID INTO id_ticket;
 
     IF id_ticket IS NULL THEN

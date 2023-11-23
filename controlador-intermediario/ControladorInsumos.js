@@ -8,7 +8,7 @@ class ControladorInsumos {
     crearInsumo = async (req, res) => {
         try {
            await this.servicio.crearInsumo(req.body)
-           res.status(201)
+           return res.status(201)
         } catch (error) {
             console.log(error)
             return res.status(error.status).send(error.message)
@@ -18,7 +18,8 @@ class ControladorInsumos {
     traerInsumos = async (req, res) => {
         try {
             const data =  await this.servicio.traerInsumos(req.params)
-            res.status(200).json(data)
+            console.log(data)
+            return res.status(200).send(data)
         } catch (error) {
             console.log(error)
             return res.status(error.status).send(error.message)

@@ -26,10 +26,12 @@ describe('test apirestful', () => {
             const request = supertest(app)
 
             const usuario = generador.get()
-            console.log(usuario)
 
-            const response = await request.post('/api/users').send(usuario)
-            expect(response.status).to.eql(200)
+            
+            const res = await request.post('/api/users/login').send({ documento: "00000000000", contrasena: "qwerqwer" })
+
+            const response = await request.post('/api/users/register').set({"Authorization": res.body.token}).send(usuario)
+            expect(response.status).to.eql(201)
 
             const usuarioGuardado = response.body
             //console.log(usuarioGuardado)
@@ -41,7 +43,9 @@ describe('test apirestful', () => {
             expect(usuarioGuardado.esAdmin).to.eql(usuario.esAdmin)
             expect(usuarioGuardado.esSuperUser).to.eql(usuario.esSuperUser)
 
+            
             await server.stop()
+
         })
     })
 })

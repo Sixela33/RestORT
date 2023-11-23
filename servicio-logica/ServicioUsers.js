@@ -32,9 +32,9 @@ class ServicioUsers {
     }
 
     const contrasenaHash = await bcrypt.hash(contrasena, 10);
-    const usuario = await this.model.crearUsuario(documento, nombre, contrasenaHash, esAdmin, esSuperUser);
+    await this.model.crearUsuario(documento, nombre, contrasenaHash, esAdmin, esSuperUser);
 
-    return usuario;
+    return {nombre, contrasena, documento, esAdmin, esSuperUser};
   };
 
   iniciarSesion = async ({ documento, contrasena }) => {
@@ -61,7 +61,13 @@ class ServicioUsers {
 
   };
 
-  hacerAdmin = async () => {};
+  hacerAdmin = async ({ id }) => {
+    
+  };
+
+  quitarAdmin = async ({ id }) => {
+
+  };
 }
 
 export default ServicioUsers;

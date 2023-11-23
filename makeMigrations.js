@@ -31,13 +31,13 @@ const dummyPlatillo = [
 
 const dummyTicket = [
     // [[id platillo, cantidad], [id platillo, caltidad], ..]
-    [[1, 5], [1, 3]],
-    [[1, 2], [2, 1]],
-    [[1, 2], [3, 1], [5, 3]],
-    [[2, 1], [4, 2]],
-    [[1, 3], [2, 2]],
-    [[3, 2], [4, 1]],
-    [[1, 1], [2, 1], [3, 1], [4, 1]]
+    [[[1, 5], [1, 3]], false],
+    [[[1, 2], [2, 1]], false],
+    [[[1, 2], [3, 1], [5, 3]], false],
+    [[[2, 1], [4, 2]], false],
+    [[[1, 3], [2, 2]], false],
+    [[[3, 2], [4, 1]], false],
+    [[[1, 1], [2, 1], [3, 1], [4, 1]], false],
 ]
 
 const hacerMigraciones = async () => {
@@ -70,7 +70,7 @@ const hacerMigraciones = async () => {
             }
             
             for (const val of dummyTicket) {
-                await model.crearTicket(val)
+                await model.crearTicket(val[0], val[1])
             }
 
             console.log("Creación de platillos dummy exitosa!");

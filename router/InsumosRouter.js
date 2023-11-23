@@ -1,5 +1,5 @@
 import express from 'express'
-import validarToken from '../middlewares/middlewares.js'
+import {validarToken} from '../middlewares/middlewares.js'
 import ControladorInsumos from '../controlador-intermediario/ControladorInsumos.js'
 
 class InsumosRouter {

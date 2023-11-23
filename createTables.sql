@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS materiaPrimaXitemMenu (
 
 CREATE TABLE IF NOT EXISTS tickets (
     ticketID SERIAL PRIMARY KEY,
-    fechaEmision DATE
+    fechaEmision DATE,
+    estadoActivo BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS DetallesTicket (

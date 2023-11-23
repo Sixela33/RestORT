@@ -1,4 +1,4 @@
-import Server from "./server.js";
+import ExpressServer from "./server.js";
 import "dotenv/config";
 
-new Server(process.env.PORT, process.env.DATABASE).start()
+new ExpressServer(process.env.PORT, process.env.DATABASE).start()
