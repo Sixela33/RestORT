@@ -16,3 +16,10 @@
     npm run makemigrations
     npm run watch
   ```
+  ### Si quieren frontend (En desarollo)
+
+  ```
+    cd public
+    npm i
+    npm run build
+  ```
