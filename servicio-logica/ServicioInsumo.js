@@ -9,52 +9,61 @@ class ServicioInsumos {
     this.model = new ModeloPostgres();
   }
 
-  crearInsumo = async ({ nombre, cantidad, costoXunidad, unidadDeMedida }) => {
-    console.log({ nombre, cantidad, costoXunidad, unidadDeMedida })
-    const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
+  crearInsumo = async ({ nombre, cantidad, costoXunidad, unidaddemedida }) => {
+    const result = validarCreacionDeInsumo({
+      nombre,
+      cantidad,
+      costoXunidad,
+      unidaddemedida,
+    });
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
 
-    await this.model.crearInsumo(nombre, cantidad, costoXunidad, unidadDeMedida);
-  }
+    await this.model.crearInsumo(
+      nombre,
+      cantidad,
+      costoXunidad,
+      unidaddemedida
+    );
+  };
 
-  traerInsumos = async ({ id }) => {
-    const result = validarBuscarInsumo({ id });
+  traerInsumos = async (id) => {
+    const result = validarBuscarInsumo( id);
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
     return await this.model.traerInsumos(id);
-  }
+  };
 
-  editarInsumo = async ({id, nombre, cantidad, costoXunidad, unidadDeMedida}) => {
-    const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidadDeMedida });
-
-    if (!result.result) {
-      throw { message: result.error, status: 422 };
-    }
-
-    return await this.model.editarInsumoxID( id, nombre, cantidad, costoXunidad, unidadDeMedida );
-  }
-
-  agregarStock = async ({id, cantidad}) => {
-    const insumo = await this.traerInsumos({id}) 
-    insumo.cantidad += cantidad
-    
-    return await this.editarInsumo(insumo)
-  }
-
-  eliminarInsumo = async ({id}) => {
-    const result = validarBuscarInsumo({ id })
+  editarInsumo = async (id, insumo) => {
+    const result = validarCreacionDeInsumo(insumo);
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
 
-    return await this.model.eliminarInsumo(id)
-  }
+    return await this.model.editarInsumoxID(id, insumo
+    );
+  };
+
+  agregarStock = async ({ id, cantidad }) => {
+    const insumo = await this.traerInsumos({ id });
+    insumo.cantidad += cantidad;
+
+    return await this.editarInsumo(insumo);
+  };
+
+  eliminarInsumo = async (id) => {
+    const result = validarBuscarInsumo(id);
+
+    if (!result.result) {
+      throw { message: result.error, status: 422 };
+    }
+    return await this.model.eliminarInsumo(id);
+  };
 }
 
 export default ServicioInsumos;

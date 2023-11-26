@@ -9,6 +9,7 @@ export const ApiProvider = ({ children }) => {
   const [clave, setClave] = useState(null);
   const [user, setUser] = useState(null);
   const [loginError, setLoginError] = useState(null);
+  const [cambios, setCambios] = useState(0);
 
   // const fetchData = async (url, method = "GET", body = null) => {
   //   try {
@@ -41,7 +42,6 @@ export const ApiProvider = ({ children }) => {
         data: body ? JSON.stringify(body) : null,
       };
       const response = await axios(url, options);
-      console.log("Response data:", response.data);
       return response.data;
     } catch (error) {
       console.error(`Error al realizar ${method} request a ${url}`, error);
@@ -83,6 +83,35 @@ export const ApiProvider = ({ children }) => {
       return false;
     }
   };
+
+  const editarInsumo = async (nuevoInsumo) => {
+    try {
+      const url = `/api/insumos/${insumoid}`;
+      let data = await fetchData(url, "PUT", nuevoInsumo);
+      return data.status === 200;
+    } catch (error) {
+      console.error("Error al agregar insumo:", error);
+      return false;
+    }
+  };
+
+  const eliminarInsumo = async (id) => {
+    try {
+      const url = `/api/insumos/${id}`;
+      const response = await fetchData(url, "DELETE");
+  
+      if (response.status === 200) {
+        return true;
+      } else {
+        console.error("Error al eliminar insumo. Estado:", response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al eliminar insumo:", error);
+      return false;
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
@@ -93,6 +122,11 @@ export const ApiProvider = ({ children }) => {
         cargarInsumos,
         agregarInsumo,
         loginError,
+        editarInsumo,
+        eliminarInsumo,
+        clave,
+        setCambios,
+        cambios
       }}
     >
       {children}

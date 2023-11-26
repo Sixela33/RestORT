@@ -11,10 +11,9 @@ class InsumosRouter {
     start() {
         this.router.get('/:id?', validarToken, this.controlador.traerInsumos)
         this.router.post('/', validarToken, validarAdmin, this.controlador.crearInsumo)
-        this.router.patch('/', validarToken, validarAdmin, this.controlador.editarInsumo)
+        this.router.put('/:id', validarToken, validarAdmin, this.controlador.editarInsumo)
         this.router.patch('/agregar',validarToken, validarAdmin, this.controlador.agregarStock)
-        this.router.delete('/', validarToken, validarAdmin, this.controlador.eliminarInsumo)
-
+        this.router.delete('/:id', validarToken, validarAdmin, this.controlador.eliminarInsumo)
         return this.router
     }
 }

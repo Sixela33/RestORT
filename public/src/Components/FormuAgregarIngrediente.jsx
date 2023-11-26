@@ -40,8 +40,8 @@ function FormuAgregarIngrediente() {
     if (!valores.costoXunidad) {
       errores.costoXunidad = "Debes ingresar un costo";
     }
-    if (!valores.unidadDeMedida) {
-      errores.unidadDeMedida = "Debes ingresar una unidad de medida";
+    if (!valores.unidaddemedida) {
+      errores.unidaddemedida = "Debes ingresar una unidad de medida";
     }
     return errores;
   };
@@ -53,7 +53,7 @@ function FormuAgregarIngrediente() {
           nombre: "",
           cantidad: 0,
           costoXunidad: 0,
-          unidadDeMedida: "",
+          unidaddemedida: "",
         }}
         validate={hacerValidaciones}
         onSubmit={agregarIngrediente}
@@ -79,8 +79,8 @@ function FormuAgregarIngrediente() {
               component={() => <div className="error">{errors.cantidad}</div>}
             />
 
-            <label htmlFor="unidadDeMedida">Unidad de medida</label>
-            <Field as="select" name="unidadDeMedida" id="unidadDeMedida">
+            <label htmlFor="unidaddemedida">Unidad de medida</label>
+            <Field as="select" name="unidaddemedida" id="unidaddemedida">
               <option value="" disabled>
                 Seleccione una opcion
               </option>
@@ -91,9 +91,9 @@ function FormuAgregarIngrediente() {
               <option value="ML">ML</option>
             </Field>
             <ErrorMessage
-              name="unidadDeMedida"
+              name="unidaddemedida"
               component={() => (
-                <div className="error">{errors.unidadDeMedida}</div>
+                <div className="error">{errors.unidaddemedida}</div>
               )}
             />
 

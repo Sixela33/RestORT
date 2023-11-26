@@ -22,7 +22,6 @@ class Server{
   }
 
   async start() {
-
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cors());

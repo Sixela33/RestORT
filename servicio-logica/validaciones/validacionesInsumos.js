@@ -5,7 +5,7 @@ const validarCreacionDeInsumo = (insumo) => {
     nombre: Joi.string().required().min(1).max(50),
     cantidad: Joi.number().required(),
     costoXunidad: Joi.number().required(),
-    unidadDeMedida: Joi.string().default("KG"),
+    unidaddemedida: Joi.string().default("KG"),
   });
 
   const { error } = insumoSchema.validate(insumo);
@@ -15,15 +15,14 @@ const validarCreacionDeInsumo = (insumo) => {
   return { result: true };
 };
 
-const validarBuscarInsumo = (id) => {
-  const insumoSchema = Joi.object({
-    id: Joi.number(),
-  });
-
-  const { error } = insumoSchema.validate(id);
+// valida por el parametro q le paso a la url
+const validarBuscarInsumo = ( id ) => {
+  const { error } = Joi.number().validate(id);
+  
   if (error) {
     return { result: false, error: error.details[0].message };
   }
+
   return { result: true };
 };
 
