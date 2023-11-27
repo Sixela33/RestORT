@@ -1,10 +1,11 @@
 # RestORT
 
+Este proyecto fue desarrollado como parte del proyecto final de la facultad. Se trata de un sistema de gestión para restaurantes que se encarga de monitorear el inventario y generar tickets de compra/venta.
+
 ## Como ininciar el server
 
   - Es necesario tener instalado docker y docker compose para iniciar la base de datos
-  - Entrar a la carpeta "server" y crear el archivo .env (hay un ejemplo en la misma carpeta (es un txt))
-    #### ejemploENV.txt
+  - Crea el archivo .env (podes encontrar un txt de ejemplo llamado ejemploENV.txt)
   - correr el comando docker compose up
   
   ```
@@ -24,3 +25,5 @@
     npm i
     npm run build
   ```
+
+Este proyecto está en desarrollo, cualquier contribución o comentario es bienvenido. ¡Gracias por tu interés!
