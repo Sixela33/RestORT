@@ -4,14 +4,15 @@ import { useApi } from "../Context/APIContext";
 import { Link } from "react-router-dom";
 
 export default function IngredienteContainer() {
-  const { fetchData, clave, setCambios, cambios} = useApi();
+  const { fetchData } = useApi();
   const [ingredientes, setIngredientes] = useState([]);
+  const {cambio, setCambio} = useState(false)
   const { Column } = Table;
  
   const obtenerIngredientes = async () => {
     try {
-      const data = await fetchData("/api/insumos");
-      setIngredientes(data);
+      let res = await fetchData("/api/insumos");
+      setIngredientes(res);
     } catch (error) {
       // Manejar el error, si es necesario
       console.error("Error al cargar ingredientes:", error);
@@ -20,7 +21,7 @@ export default function IngredienteContainer() {
 
   useEffect(() => {
     obtenerIngredientes();
-  }, [cambios]);
+  }, [cambio]);
 
   const currencyFormat = (num) => {
     return Intl.NumberFormat("es-AR", {
@@ -29,25 +30,17 @@ export default function IngredienteContainer() {
     }).format(num);
   };
 
-  const handleEditar = (id) => {};
 
   const handleEliminar = async (id) => {
     try{
-      const options = {
-        method: "delete",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: clave,
-        },
-      };
-      const response = await fetch(`/api/insumos/${id}`, options);
-      const data = await response.json();
+      const url = `/api/insumos/${id}`;
+      const response = await fetchData(url, "DELETE");
 
     } catch (error) {
       console.error(`Error al realizar delete request a /api/insumos`, error);
       throw error;
     }
-    setCambios(cambios+1);
+    setCambio(!cambio);
   };
 
   return (

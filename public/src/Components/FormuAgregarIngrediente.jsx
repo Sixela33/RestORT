@@ -3,7 +3,7 @@ import { useApi } from "../Context/APIContext";
 import { useState } from "react";
 
 function FormuAgregarIngrediente() {
-  const { agregarInsumo } = useApi();
+  const { fetchData } = useApi();
   const [insumoCreado, setInsumoCreado] = useState(false);
 
   const agregarIngrediente = async (valores, { resetForm }) => {
@@ -15,8 +15,11 @@ function FormuAgregarIngrediente() {
     };
     // Enviar los datos al backend
     try {
-      const resultado = agregarInsumo(valoresValidos);
-      if (resultado) {
+      
+      const url = "/api/insumos/";
+      let data = await fetchData(url, "POST", nuevoInsumo);
+    
+      if (data) {
         setInsumoCreado(true);
         setTimeout(() => setInsumoCreado(false), 3000);
       }

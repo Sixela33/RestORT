@@ -9,29 +9,11 @@ export const ApiProvider = ({ children }) => {
   const [clave, setClave] = useState(null);
   const [user, setUser] = useState(null);
   const [loginError, setLoginError] = useState(null);
-  const [cambios, setCambios] = useState(0);
 
-  // const fetchData = async (url, method = "GET", body = null) => {
-  //   try {
-  //     const options = {
-  //       method,
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: clave,
-  //       },
-  //       body: body ? JSON.stringify(body) : null,
-  //     };
-
-  //     const response = await fetch(url, options);
-  //     const data = await response.json();
-  //     return data;
-  //   } catch (error) {
-  //     console.error(`Error al realizar ${method} request a ${url}`, error);
-  //     throw error;
-  //   }
-  // };
+  
 
   const fetchData = async (url, method = "GET", body = null) => {
+    setUser({asdf:"asdf"})
     try {
       const options = {
         method,
@@ -66,51 +48,8 @@ export const ApiProvider = ({ children }) => {
     setUser(null);
   };
 
-  const cargarInsumos = async () => {
-    const url = "/api/insumos/";
-    let data = await fetchData(url);
-    console.log(data);
-    return data;
-  };
 
-  const agregarInsumo = async (nuevoInsumo) => {
-    try {
-      const url = "/api/insumos/";
-      let data = await fetchData(url, "POST", nuevoInsumo);
-      return data.status === 200;
-    } catch (error) {
-      console.error("Error al agregar insumo:", error);
-      return false;
-    }
-  };
 
-  const editarInsumo = async (nuevoInsumo) => {
-    try {
-      const url = `/api/insumos/${insumoid}`;
-      let data = await fetchData(url, "PUT", nuevoInsumo);
-      return data.status === 200;
-    } catch (error) {
-      console.error("Error al agregar insumo:", error);
-      return false;
-    }
-  };
-
-  const eliminarInsumo = async (id) => {
-    try {
-      const url = `/api/insumos/${id}`;
-      const response = await fetchData(url, "DELETE");
-  
-      if (response.status === 200) {
-        return true;
-      } else {
-        console.error("Error al eliminar insumo. Estado:", response.status);
-        return false;
-      }
-    } catch (error) {
-      console.error("Error al eliminar insumo:", error);
-      return false;
-    }
-  };
 
   return (
     <ApiContext.Provider
@@ -119,14 +58,7 @@ export const ApiProvider = ({ children }) => {
         logout,
         login,
         user,
-        cargarInsumos,
-        agregarInsumo,
         loginError,
-        editarInsumo,
-        eliminarInsumo,
-        clave,
-        setCambios,
-        cambios
       }}
     >
       {children}
