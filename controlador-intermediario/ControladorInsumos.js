@@ -16,9 +16,8 @@ class ControladorInsumos {
   };
 
   traerInsumos = async (req, res) => {
-    const { id } = req.params;
     try {
-      const data = await this.servicio.traerInsumos(id);
+      const data = await this.servicio.traerInsumos(req.params);
       return res.status(200).send(data);
     } catch (error) {
       console.log(error);
@@ -47,9 +46,8 @@ class ControladorInsumos {
   };
 
   eliminarInsumo = async (req, res) => {
-    const { id } = req.params;
     try {
-      await this.servicio.eliminarInsumo(id);
+      await this.servicio.eliminarInsumo(req.params);
       return res.status(200).json({ message: 'Insumo eliminado correctamente' });
     } catch (error) {
       console.log(error);

@@ -1,8 +1,5 @@
 import ModeloPostgres from "../modelo-db/DAO/ModeloPostgres.js";
-import {
-  validarCreacionDeInsumo,
-  validarBuscarInsumo,
-} from "./validaciones/validacionesInsumos.js";
+import { validarCreacionDeInsumo, validarBuscarInsumo} from "./validaciones/validacionesInsumos.js";
 
 class ServicioInsumos {
   constructor() {
@@ -10,27 +7,18 @@ class ServicioInsumos {
   }
 
   crearInsumo = async ({ nombre, cantidad, costoXunidad, unidaddemedida }) => {
-    const result = validarCreacionDeInsumo({
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidaddemedida,
-    });
+    const result = validarCreacionDeInsumo({ nombre, cantidad, costoXunidad, unidaddemedida});
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
     }
 
-    await this.model.crearInsumo(
-      nombre,
-      cantidad,
-      costoXunidad,
-      unidaddemedida
-    );
+    await this.model.crearInsumo( nombre, cantidad, costoXunidad, unidaddemedida );
+
   };
 
-  traerInsumos = async (id) => {
-    const result = validarBuscarInsumo( id);
+  traerInsumos = async ({id}) => {
+    const result = validarBuscarInsumo(id);
 
     if (!result.result) {
       throw { message: result.error, status: 422 };
@@ -56,7 +44,8 @@ class ServicioInsumos {
     return await this.editarInsumo(insumo);
   };
 
-  eliminarInsumo = async (id) => {
+  eliminarInsumo = async ({id}) => {
+
     const result = validarBuscarInsumo(id);
 
     if (!result.result) {

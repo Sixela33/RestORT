@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS insumos (
     nombre VARCHAR(255) NOT NULL,
     cantidad DECIMAL NOT NULL,
     costoXunidad DECIMAL,
-    unidadDeMedida VARCHAR(50) NOT NULL
+    unidaddemedida VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS platillos (

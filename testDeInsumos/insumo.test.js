@@ -3,11 +3,11 @@ import generador from './generador/insumo.js'
 
 describe('***** Test del generador de producto *****', () => {
 
-    it('el producto debe contener los campos nombre, cantidad, costoXunidad y unidadDeMedida', () => {
+    it('el producto debe contener los campos nombre, cantidad, costoXunidad y unidaddemedida', () => {
         const insumo = generador.get()
         console.log(insumo)
 
-        expect(insumo).to.include.keys('nombre','cantidad','costoXunidad','unidadDeMedida')
+        expect(insumo).to.include.keys('nombre','cantidad','costoXunidad','unidaddemedida')
     })
 
     it('debería generar insumos aleatorios', () => {
@@ -19,7 +19,7 @@ describe('***** Test del generador de producto *****', () => {
         expect(ins1.nombre).not.to.eql(ins2.nombre)
         expect(ins1.cantidad).not.to.eql(ins2.cantidad)
         expect(ins1.costoXunidad).not.to.eql(ins2.costoXunidad)
-        expect(ins1.unidadDeMedida).not.to.eql(ins2.unidadDeMedida)
+        expect(ins1.unidaddemedida).not.to.eql(ins2.unidaddemedida)
     })
 })
 //prueba unitaria con mocha

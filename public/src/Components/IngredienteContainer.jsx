@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 export default function IngredienteContainer() {
   const { fetchData } = useApi();
   const [ingredientes, setIngredientes] = useState([]);
-  const {cambio, setCambio} = useState(false)
+  const [cambio, setCambio] = useState(false)
   const { Column } = Table;
  
   const obtenerIngredientes = async () => {
     try {
       let res = await fetchData("/api/insumos");
+      console.log(res)
       setIngredientes(res);
     } catch (error) {
       // Manejar el error, si es necesario

@@ -3,7 +3,7 @@ import generador from './generador/usuario.js'
 
 describe('***** Test del generador de producto *****', () => {
 
-    it('el producto debe contener los campos nombre, cantidad, costoXunidad y unidadDeMedida', () => {
+    it('el producto debe contener los campos nombre, cantidad, costoXunidad y unidaddemedida', () => {
         const usuario = generador.get()
         console.log(usuario)
 

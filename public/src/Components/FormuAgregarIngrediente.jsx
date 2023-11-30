@@ -17,7 +17,7 @@ function FormuAgregarIngrediente() {
     try {
       
       const url = "/api/insumos/";
-      let data = await fetchData(url, "POST", nuevoInsumo);
+      let data = await fetchData(url, "POST", valoresValidos);
     
       if (data) {
         setInsumoCreado(true);

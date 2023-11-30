@@ -13,7 +13,6 @@ export const ApiProvider = ({ children }) => {
   
 
   const fetchData = async (url, method = "GET", body = null) => {
-    setUser({asdf:"asdf"})
     try {
       const options = {
         method,
@@ -21,7 +20,7 @@ export const ApiProvider = ({ children }) => {
           "Content-Type": "application/json",
           Authorization: clave,
         },
-        data: body ? JSON.stringify(body) : null,
+        data: body ? JSON.stringify(body) : JSON.stringify({}),
       };
       const response = await axios(url, options);
       return response.data;

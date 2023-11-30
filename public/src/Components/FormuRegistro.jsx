@@ -49,7 +49,7 @@ function FormuRegistro() {
               component={() => <div className="error">{errors.nombre}</div>}
             />
 
-            <label htmlFor="documento">Usuario</label>
+            <label htmlFor="documento">documento</label>
             <Field
               type="text"
               name="documento"

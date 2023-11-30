@@ -103,13 +103,13 @@ class ModeloPostgres {
 
   // --------------------[INSUMOS]--------------------
 
-  crearInsumo = async (nombre, cantidad, costoXunidad, unidadDeMedida) => {
+  crearInsumo = async (nombre, cantidad, costoXunidad, unidaddemedida) => {
     if (!CnxPostgress.connection)
       throw new Error("No se establecio la conexion con la base de datos");
     try {
       CnxPostgress.db.query(
-        "INSERT INTO insumos (nombre, cantidad, costoXunidad, unidadDeMedida) VALUES ($1, $2, $3, $4);",
-        [nombre, cantidad, costoXunidad, unidadDeMedida]
+        "INSERT INTO insumos (nombre, cantidad, costoXunidad, unidaddemedida) VALUES ($1, $2, $3, $4);",
+        [nombre, cantidad, costoXunidad, unidaddemedida]
       );
     } catch (error) {
       console.error("Error \n", error);
@@ -157,7 +157,7 @@ class ModeloPostgres {
       }
 
       const resultado = await CnxPostgress.db.query(
-        "UPDATE insumos SET nombre = $2, cantidad = $3, costoXunidad = $4, unidadDeMedida = $5 WHERE insumoID = $1 RETURNING *;",
+        "UPDATE insumos SET nombre = $2, cantidad = $3, costoXunidad = $4, unidaddemedida = $5 WHERE insumoID = $1 RETURNING *;",
         [idurl, nombre, cantidad, costoXunidad, unidaddemedida]
       );
 
